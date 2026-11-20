@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASTIX · CanSat-missie</title>
+<meta name="description" content="ASTIX is een CanSat-team van vijf leerlingen. Een satelliet zo groot als een blikje, gelanceerd tot een kilometer hoog, die tijdens de daling meet hoe turbulent de lucht is.">
+<meta name="theme-color" content="#050a1c">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/img/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=1">
+</head>
+<body>
+
+<div class="space" aria-hidden="true"></div>
+
+<!-- top bar -->
+<header class="bar">
+  <a class="brand" href="#start" aria-label="ASTIX, naar boven">
+    <img src="assets/img/astix-logo.webp" alt="" width="36" height="36">
+    <span>ASTIX</span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="#cansat" data-en="CanSat">CanSat</a>
+    <a href="#missie" data-en="Mission">Missie</a>
+    <a href="#ontwerp" data-en="Design">Ontwerp</a>
+    <a href="#team" data-en="Crew">Crew</a>
+    <a href="#plan" data-en="Mission plan">Missieplan</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Taal">
+    <button type="button" data-lang="nl" aria-pressed="true">NL</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<!-- the descending CanSat: altimeter on the right (computer) / bar under the menu (phone) -->
+<aside class="hud" aria-hidden="true">
+  <div class="hud-track">
+    <span class="tick" style="--t:0">1000</span><span class="tick" style="--t:.25">750</span>
+    <span class="tick" style="--t:.5">500</span><span class="tick" style="--t:.75">250</span><span class="tick" style="--t:1">0</span>
+    <div class="probe" id="probe">
+      <svg viewBox="0 0 60 92">
+        <path class="chute" d="M4 30C4 12 16 2 30 2s26 10 26 28c-4-3-8-3-11 0-4-3-8-3-11 0h-8c-3-3-7-3-11 0-3-3-7-3-11 0z"/>
+        <path class="chute-panel" d="M30 2c-6 6-8 16-7 28M30 2c6 6 8 16 7 28"/>
+        <path class="lines" d="M5 30l20 34M19 30l8 34M41 30l-8 34M55 30L35 64"/>
+        <rect class="can" x="22" y="62" width="16" height="26" rx="3"/>
+        <rect class="can-band" x="22" y="70" width="16" height="5"/>
+        <path class="antenna" d="M30 62v-5"/>
+      </svg>
+    </div>
+  </div>
+  <dl class="hud-read">
+    <div><dt>ALT</dt><dd><b id="alt">1000</b> m</dd></div>
+    <div><dt>VEL</dt><dd><b id="vel">0.0</b> m/s</dd></div>
+    <div><dt data-en="PHASE">FASE</dt><dd id="phase">T-0</dd></div>
+  </dl>
+</aside>
+
+<main>
+
+  <!-- HERO -->
+  <section id="start" class="hero">
+    <div class="hero-in">
+      <div class="emblem">
+        <span class="orbit o1"></span><span class="orbit o2"></span>
+        <img src="assets/img/astix-logo.webp" alt="ASTIX-logo: de naam ASTIX met een baan rond de aarde" width="360" height="360">
+      </div>
+      <div class="hero-copy">
+        <p class="kicker mono">// CANSAT-TEAM · <span data-en="5 STUDENTS">5 LEERLINGEN</span></p>
+        <h1 class="title" aria-label="ASTIX"><span>A</span><span>S</span><span>T</span><span>I</span><span>X</span></h1>
+        <p class="lead" data-en="A satellite the size of a soda can. Launched to one kilometre, and on the way down it measures how turbulent the air is.">Een satelliet zo groot als een blikje frisdrank. Een raket schiet hem een kilometer de lucht in, en op weg naar beneden meet hij hoe turbulent de lucht is.</p>
+        <div class="cta">
+          <a class="btn" href="#cansat" data-en="Start the descent ↓">Start de daling ↓</a>
+          <a class="btn ghost" href="#team" data-en="Meet the crew">Ontmoet de crew</a>
+        </div>
+      </div>
+    </div>
+    <p class="scroll-hint mono" data-en="scroll to fall">scroll om te vallen</p>
+  </section>
+
+  <!-- WHAT IS A CANSAT -->
+  <section id="cansat" class="sec" data-phase="APOGEUM" data-phase-en="APOGEE">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="mono label">01 · <span data-en="WHAT IS A CANSAT">WAT IS EEN CANSAT</span></p>
+        <h2 data-en="A whole satellite in one can">Een hele satelliet in één blikje</h2>
+        <p class="sub" data-en="A CanSat has everything a real satellite has: power, sensors, a computer and a radio. Only it all has to fit in a soda can.">Een CanSat heeft alles wat een echte satelliet ook heeft: stroom, sensoren, een computer en een radio. Alleen moet het allemaal in een blikje passen.</p>
+      </header>
+
+      <ol class="steps">
+        <li class="step">
+          <svg viewBox="0 0 80 80" aria-hidden="true"><rect x="26" y="14" width="28" height="52" rx="5" class="i-can"/><path d="M26 28h28M26 52h28" class="i-line"/><circle cx="40" cy="40" r="5" class="i-dot"/></svg>
+          <h3 data-en="Build">Bouwen</h3>
+          <p data-en="Everything goes into the volume of a 330 ml can: about 66 mm wide and 115 mm high.">Alles moet in het volume van een blikje van 330 ml: ongeveer 66 mm breed en 115 mm hoog.</p>
+        </li>
+        <li class="step">
+          <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M40 8c8 8 12 20 12 34v14H28V42c0-14 4-26 12-34z" class="i-can"/><path d="M28 56l-8 10h12M52 56l8 10H48" class="i-line"/><path d="M34 66l6 10 6-10" class="i-fire"/></svg>
+          <h3 data-en="Launch">Lancering</h3>
+          <p data-en="A rocket takes the CanSat up to about one kilometre and releases it at the top.">Een raket brengt de CanSat tot ongeveer een kilometer hoog en laat hem bovenaan los.</p>
+        </li>
+        <li class="step">
+          <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M14 32c0-14 12-22 26-22s26 8 26 22c-5-3-9-3-13 0-4-3-9-3-13 0-4-3-9-3-13 0-4-3-8-3-13 0z" class="i-chute"/><path d="M16 32l18 22M64 32L46 54" class="i-line"/><rect x="33" y="52" width="14" height="20" rx="3" class="i-can"/></svg>
+          <h3 data-en="Descent">Daling</h3>
+          <p data-en="Under its parachute it measures the whole way down and radios everything to our ground station.">Aan een parachute meet hij de hele weg naar beneden, en hij stuurt alles via de radio naar ons grondstation.</p>
+        </li>
+      </ol>
+
+      <div class="specs mono">
+        <div><b>330</b><span>ml</span><em data-en="volume">volume</em></div>
+        <div><b>~1</b><span>km</span><em data-en="release height">loslaathoogte</em></div>
+        <div><b>1×</b><span>/s</span><em data-en="data to the ground">data naar de grond</em></div>
+        <div><b>2</b><span data-en="missions">missies</span><em data-en="primary + secondary">primair + secundair</em></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSIONS -->
+  <section id="missie" class="sec" data-phase="TURBULENTIE" data-phase-en="TURBULENCE">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="mono label">02 · <span data-en="THE MISSIONS">DE MISSIES</span></p>
+        <h2 data-en="Two jobs, one fall">Twee opdrachten, één val</h2>
+      </header>
+
+      <div class="missions">
+        <article class="mission">
+          <p class="mono tag">PRIMARY</p>
+          <h3 data-en="Measure the air">De lucht meten</h3>
+          <p data-en="Every CanSat team gets the same task: measure air temperature and air pressure during the descent, and send them to the ground at least once per second. From the pressure we calculate how high the CanSat is.">Elk CanSat-team krijgt dezelfde opdracht: tijdens de daling de luchttemperatuur en de luchtdruk meten, en die minstens één keer per seconde naar de grond sturen. Uit de luchtdruk berekenen we hoe hoog de CanSat hangt.</p>
+          <ul class="chips mono"><li data-en="temperature">temperatuur</li><li data-en="air pressure">luchtdruk</li><li data-en="altitude">hoogte</li></ul>
+        </article>
+        <article class="mission second">
+          <p class="mono tag">SECONDARY</p>
+          <h3 data-en="Map the turbulence">Turbulentie in kaart brengen</h3>
+          <p data-en="The second mission is our own idea. We measure how hard the CanSat is shaken around on its way down. Calm air gives a smooth fall, turbulent air throws it around. With that data we make a map of where the air was restless.">De tweede missie bedenkt elk team zelf. Wij meten hoe hard de CanSat heen en weer geschud wordt op weg naar beneden. Rustige lucht geeft een kalme val, turbulente lucht gooit hem alle kanten op. Met die data maken we een kaart van waar de lucht onrustig was.</p>
+          <ul class="chips mono"><li data-en="movement">beweging</li><li data-en="shocks">schokken</li><li data-en="turbulence map">turbulentiekaart</li></ul>
+        </article>
+      </div>
+
+      <figure class="turb">
+        <canvas id="turb" aria-label="Animatie van luchtstroming: rustig links, turbulent rechts"></canvas>
+        <figcaption class="mono">
+          <span class="calm" data-en="← calm air">← rustige lucht</span>
+          <span data-en="move your mouse through the air">beweeg je muis door de lucht</span>
+          <span class="rough" data-en="turbulent →">turbulent →</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- DESIGN: exploded can -->
+  <section id="ontwerp" class="sec" data-phase="STABIEL" data-phase-en="STABLE">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="mono label">03 · <span data-en="INSIDE THE CAN">IN HET BLIKJE</span></p>
+        <h2 data-en="Take it apart">Haal hem uit elkaar</h2>
+        <p class="sub" data-en="Click a layer to see what it does and who is working on it.">Klik op een laag om te zien wat ze doet en wie eraan werkt.</p>
+      </header>
+
+      <div class="explode">
+        <svg class="layers" id="layers" viewBox="0 0 320 520" role="group" aria-label="Opengewerkte CanSat">
+          <g class="layer" data-part="parachute" tabindex="0" role="button" aria-label="Parachute">
+            <path d="M70 70C70 30 112 8 160 8s90 22 90 62c-13-8-26-8-37 0-12-8-26-8-37 0h-32c-11-8-25-8-37 0-11-8-24-8-37 0z" class="p-fill"/>
+            <path d="M160 8c-18 14-24 38-22 62M160 8c18 14 24 38 22 62" class="p-line"/>
+            <path d="M72 70l70 44M248 70l-70 44M124 70l26 44M196 70l-26 44" class="p-cord"/>
+          </g>
+          <g class="layer" data-part="radio" tabindex="0" role="button" aria-label="Radio en antenne">
+            <path d="M160 118v-26" class="p-ant"/><circle cx="160" cy="90" r="4" class="p-led"/>
+            <ellipse cx="160" cy="146" rx="70" ry="16" class="p-top"/><rect x="90" y="146" width="140" height="30" class="p-side"/><ellipse cx="160" cy="176" rx="70" ry="16" class="p-bot"/>
+            <rect x="118" y="140" width="34" height="12" rx="2" class="p-chip"/>
+          </g>
+          <g class="layer" data-part="mcu" tabindex="0" role="button" aria-label="Microcontroller">
+            <ellipse cx="160" cy="216" rx="70" ry="16" class="p-top"/><rect x="90" y="216" width="140" height="30" class="p-side"/><ellipse cx="160" cy="246" rx="70" ry="16" class="p-bot"/>
+            <rect x="140" y="208" width="40" height="16" rx="2" class="p-chip"/>
+            <path d="M120 216h18M182 216h18M160 200v8" class="p-trace"/>
+          </g>
+          <g class="layer" data-part="sensors" tabindex="0" role="button" aria-label="Sensoren">
+            <ellipse cx="160" cy="286" rx="70" ry="16" class="p-top"/><rect x="90" y="286" width="140" height="30" class="p-side"/><ellipse cx="160" cy="316" rx="70" ry="16" class="p-bot"/>
+            <rect x="120" y="279" width="16" height="12" rx="2" class="p-chip"/><rect x="152" y="279" width="16" height="12" rx="2" class="p-chip"/><rect x="184" y="279" width="16" height="12" rx="2" class="p-chip"/>
+          </g>
+          <g class="layer" data-part="power" tabindex="0" role="button" aria-label="Batterij">
+            <ellipse cx="160" cy="356" rx="70" ry="16" class="p-top"/><rect x="90" y="356" width="140" height="34" class="p-side"/><ellipse cx="160" cy="390" rx="70" ry="16" class="p-bot"/>
+            <rect x="126" y="346" width="68" height="18" rx="4" class="p-bat"/><path d="M194 352v6" class="p-trace"/>
+          </g>
+          <g class="layer" data-part="shell" tabindex="0" role="button" aria-label="3D-geprinte behuizing">
+            <ellipse cx="160" cy="430" rx="74" ry="17" class="p-top shell"/><rect x="86" y="430" width="148" height="56" class="p-side shell"/><ellipse cx="160" cy="486" rx="74" ry="17" class="p-bot shell"/>
+            <path d="M86 446h148M86 462h148M86 478h148" class="p-print"/>
+          </g>
+        </svg>
+
+        <div class="part-card" id="part" aria-live="polite">
+          <p class="mono label" id="part-k">—</p>
+          <h3 id="part-t" data-en="Pick a layer">Kies een laag</h3>
+          <p id="part-d" data-en="Each layer of the can has its own job. Together they make one small satellite.">Elke laag van het blikje heeft een eigen taak. Samen maken ze één kleine satelliet.</p>
+          <div class="part-who" id="part-who"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="sec" data-phase="DALING" data-phase-en="DESCENT">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="mono label">04 · <span data-en="THE CREW">DE CREW</span></p>
+        <h2 data-en="Five people, one can">Vijf mensen, één blikje</h2>
+        <p class="sub" data-en="Every crew member has their own mission patch. Click one to see the tasks.">Elk crewlid heeft een eigen missiepatch. Klik erop om de taken te zien.</p>
+      </header>
+      <div class="crew" id="crew"></div>
+      <div class="crew-tasks" id="crew-tasks" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section id="plan" class="sec" data-phase="LAATSTE METERS" data-phase-en="FINAL METRES">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="mono label">05 · <span data-en="MISSION PLAN">MISSIEPLAN</span></p>
+        <h2 data-en="Who does what">Wie doet wat</h2>
+        <p class="sub" data-en="Every task has two people on it. Filter by crew member.">Op elke taak staan twee mensen. Filter per crewlid.</p>
+      </header>
+      <div class="filters" id="filters" role="group" aria-label="Filter op crewlid"></div>
+      <div class="board" id="board"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- landing: the Earth -->
+<footer class="ground" id="ground" data-phase="GELAND" data-phase-en="TOUCHDOWN">
+  <div class="planet" aria-hidden="true"><div class="lights"></div></div>
+  <div class="land">
+    <p class="mono touch" id="touch" data-en="TOUCHDOWN · thanks for falling along">TOUCHDOWN · bedankt om mee te vallen</p>
+    <img src="assets/img/astix-logo.webp" alt="" width="70" height="70">
+    <p class="mono small">ASTIX · CanSat-team · <span id="year">2026</span></p>
+    <a class="btn ghost sm" href="#start" id="relaunch" data-en="Relaunch ↑">Opnieuw lanceren ↑</a>
+  </div>
+</footer>
+
+<script src="assets/js/main.js?v=1"></script>
+</body>
+</html>
