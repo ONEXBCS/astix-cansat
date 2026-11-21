@@ -776,3 +776,5 @@ body.no-scroll{overflow:hidden}
   .l-notes text{font-size:30px}
 }
 @media (prefers-reduced-motion:reduce){.l-path,.l-waves circle,.l-can{animation:none}}
+/* phone: the 3D scene only takes the top of the screen */
+@media (max-width:820px){#hero3d{top:var(--bar);height:calc(58svh - var(--bar));-webkit-mask:linear-gradient(#000 80%,transparent);mask:linear-gradient(#000 80%,transparent)}}
