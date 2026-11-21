@@ -696,3 +696,7 @@ html{background:radial-gradient(120% 80% at 70% -10%,#16223f 0%,var(--deep) 50%,
 @media (max-width:420px){.bar .ig-mini{display:none}.bar .lang{margin-left:auto}.brand span{font-size:14px}}
 body.no-scroll{overflow:hidden}
 
+
+/* v10 · no readout box, just the altimeter line */
+.hud-read{display:none!important}
+@media (max-width:1100px){.hud{display:none!important}}
