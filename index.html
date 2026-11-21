@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
     <span>ASTIX</span>
   </a>
   <nav class="nav" id="nav">
+    <a href="#start">Home</a>
     <a href="#lancering" data-en="Launch">Lancering</a>
     <a href="#cansat" data-en="CanSat">CanSat</a>
     <a href="#missie" data-en="Mission">Missie</a>
@@ -73,7 +74,7 @@
         <img src="assets/img/astix-logo.webp" alt="ASTIX-logo: de naam ASTIX met een baan rond de aarde" width="360" height="360">
       </div>
       <div class="hero-copy">
-        <p class="kicker mono">// CANSAT BELGIUM · 2026–2027</p>
+        <p class="kicker mono">CANSAT BELGIUM · 2026–2027</p>
         <h1 class="title" aria-label="ASTIX"><span>A</span><span>S</span><span>T</span><span>I</span><span>X</span></h1>
         <p class="lead" data-en="We are five students building a satellite the size of a soft drink can. A rocket takes it up, a parachute brings it down, and on the way down it measures how restless the air is.">We zijn vijf leerlingen en we bouwen een satelliet zo groot als een blikje frisdrank. Een raket schiet hem omhoog, een parachute brengt hem terug, en onderweg meet hij hoe onrustig de lucht is.</p>
         <div class="cta">
@@ -88,32 +89,11 @@
   <!-- LAUNCH (scroll-driven) -->
   <section id="lancering" class="launch" data-phase="STIJGEN" data-phase-en="ASCENT">
     <div class="launch-stage">
-      <div class="launch-sky"></div>
-      <div class="launch-ground"><span class="rail"></span><span class="hill h1"></span><span class="hill h2"></span></div>
-      <div class="smoke" id="smoke"></div>
-      <div class="rocket" id="rocket">
-        <svg viewBox="0 0 60 220" aria-hidden="true">
-          <g class="nose" id="nose"><path d="M30 2C20 18 16 36 16 52h28c0-16-4-34-14-50z"/></g>
-          <rect x="16" y="52" width="28" height="120" class="body"/>
-          <rect x="16" y="92" width="28" height="10" class="stripe"/>
-          <text x="30" y="140" class="decal" transform="rotate(-90 30 140)">ASTIX</text>
-          <path d="M16 140L2 182h14zM44 140l14 42H44z" class="fin"/>
-          <path d="M20 172h20l-3 12H23z" class="nozzle"/>
-          <g class="flame"><path d="M22 184c0 18 8 30 8 36 0-6 8-18 8-36z"/><path d="M26 184c0 10 4 18 4 22 0-4 4-12 4-22z" class="core"/></g>
-        </svg>
-        <div class="payload" id="payload">
-          <svg viewBox="0 0 60 92" aria-hidden="true">
-            <path class="chute" d="M4 30C4 12 16 2 30 2s26 10 26 28c-4-3-8-3-11 0-4-3-8-3-11 0h-8c-3-3-7-3-11 0-3-3-7-3-11 0z"/>
-            <path class="chute-panel" d="M30 2c-6 6-8 16-7 28M30 2c6 6 8 16 7 28"/>
-            <path class="lines" d="M5 30l20 34M19 30l8 34M41 30l-8 34M55 30L35 64"/>
-            <rect class="can" x="22" y="62" width="16" height="26" rx="3"/><rect class="can-band" x="22" y="70" width="16" height="5"/>
-          </svg>
-        </div>
-      </div>
-      <div class="count" id="count" aria-hidden="true"></div>
+      <canvas id="flight" aria-label="Animatie van de lancering: de raket stijgt op en laat bovenaan de CanSat met parachute los"></canvas>
 
       <div class="telemetry mono">
         <p class="t-title" data-en="FLIGHT · ROCKET">VLUCHT · RAKET</p>
+        <div class="clock"><span data-en="mission time">missietijd</span><b id="l-t">T-00:03</b></div>
         <div><span data-en="altitude">hoogte</span><b id="l-alt">0 m</b></div>
         <div><span data-en="speed">snelheid</span><b id="l-vel">0 km/u</b></div>
         <div><span data-en="acceleration">versnelling</span><b id="l-g">1.0 G</b></div>
@@ -237,28 +217,19 @@
     </div>
   </section>
 
-  <!-- TEAM -->
+  <!-- TEAM + TASKS -->
   <section id="team" class="sec" data-phase="DALING" data-phase-en="DESCENT">
     <div class="wrap">
       <header class="sec-head">
         <p class="mono label">04 · <span data-en="THE TEAM">HET TEAM</span></p>
         <h2 data-en="Who we are">Wie we zijn</h2>
-        <p class="sub" data-en="Each of us has a mission patch. Click one to see that person's tasks.">Ieder van ons heeft een missiepatch. Klik erop voor de taken van die persoon.</p>
+        <p class="sub" data-en="Put our first letters next to each other and you get ASTIX. Click a patch to see that person's tasks.">Zet onze voorletters naast elkaar en je krijgt ASTIX. Klik op een patch om de taken van die persoon te zien.</p>
       </header>
       <div class="crew" id="crew"></div>
-      <div class="crew-tasks" id="crew-tasks" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <!-- PLAN -->
-  <section id="plan" class="sec" data-phase="DALING" data-phase-en="DESCENT">
-    <div class="wrap">
-      <header class="sec-head">
-        <p class="mono label">05 · <span data-en="TASKS">TAKEN</span></p>
-        <h2 data-en="Who does what">Wie doet wat</h2>
-        <p class="sub" data-en="Every task has two names on it. Big tests and the report we do together.">Op elke taak staan twee namen. De grote test en het rapport doen we samen.</p>
-      </header>
-      <div class="filters" id="filters" role="group" aria-label="Filter op teamlid"></div>
+      <div class="task-head">
+        <h3 id="task-title" data-en="All tasks">Alle taken</h3>
+        <button type="button" class="btn ghost sm" id="task-reset" hidden data-en="Show everyone">Toon iedereen</button>
+      </div>
       <div class="board" id="board"></div>
     </div>
   </section>
@@ -267,7 +238,7 @@
   <section id="route" class="sec" data-phase="LAATSTE METERS" data-phase-en="FINAL METRES">
     <div class="wrap">
       <header class="sec-head">
-        <p class="mono label">06 · <span data-en="ROAD TO ELSENBORN">OP WEG NAAR ELSENBORN</span></p>
+        <p class="mono label">05 · <span data-en="ROAD TO ELSENBORN">OP WEG NAAR ELSENBORN</span></p>
         <h2 data-en="The planning">De planning</h2>
         <p class="sub" data-en="The Belgian competition, school year 2026–2027. What has passed turns grey, the next step lights up.">De Belgische wedstrijd, schooljaar 2026–2027. Wat voorbij is wordt grijs, de volgende stap licht op.</p>
       </header>
@@ -313,12 +284,33 @@
   <div class="planet" aria-hidden="true"><div class="lights"></div></div>
   <div class="land">
     <p class="mono touch" data-en="TOUCHDOWN · thanks for falling along">TOUCHDOWN · bedankt om mee te vallen</p>
-    <img src="assets/img/astix-logo.webp" alt="" width="70" height="70">
-    <p class="mono small">ASTIX · CanSat Belgium · <span id="year">2026</span> · <a href="https://www.instagram.com/astixcansat/" target="_blank" rel="noopener">@astixcansat</a></p>
-    <a class="btn ghost sm" href="#start" data-en="Back to the pad ↑">Terug naar het lanceerplatform ↑</a>
+    <div class="foot-card">
+      <div class="foot-brand">
+        <img src="assets/img/astix-logo.webp" alt="" width="64" height="64">
+        <div>
+          <b>ASTIX</b>
+          <span data-en="CanSat team of">CanSat-team van</span>
+          <a href="https://richtpuntninovezottegem.smartschool.be/" target="_blank" rel="noopener">Richtpunt Ninove-Zottegem ↗</a>
+        </div>
+      </div>
+      <nav class="foot-col" aria-label="Site">
+        <p class="mono" data-en="ON THIS SITE">OP DEZE SITE</p>
+        <a href="#start">Home</a><a href="#lancering" data-en="Launch">Lancering</a><a href="#missie" data-en="Mission">Missie</a><a href="#team" data-en="Team">Team</a><a href="#route" data-en="Planning">Planning</a>
+      </nav>
+      <div class="foot-col">
+        <p class="mono" data-en="FOLLOW US">VOLG ONS</p>
+        <a href="https://www.instagram.com/astixcansat/" target="_blank" rel="noopener">Instagram · @astixcansat ↗</a>
+        <p class="mono" data-en="ABOUT CANSAT">OVER CANSAT</p>
+        <a href="https://esero.be/nl/stem-projecten-cansat/" target="_blank" rel="noopener">ESERO Belgium ↗</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Team ASTIX · <span data-en="Website by">Website gemaakt door</span> <a href="https://onexbcs.github.io" target="_blank" rel="noopener">ONEX ↗</a></span>
+      <a class="btn ghost sm" href="#start" data-en="Back to the launch pad ↑">Terug naar het lanceerplatform ↑</a>
+    </div>
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=4"></script>
+<script src="assets/js/main.js?v=5"></script>
 </body>
 </html>
