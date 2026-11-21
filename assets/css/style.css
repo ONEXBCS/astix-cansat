@@ -707,3 +707,14 @@ body.no-scroll{overflow:hidden}
 .stop::before{left:-50px}
 @media (max-width:560px){.stop::before{left:-38px}}
 .stop.past::before{background:#34548c;border-color:#5f84c2}
+
+/* touchdown line above the footer */
+.touch2{justify-self:center;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;margin:0 0 8px;padding:0 16px}
+.td-k{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:#93b1dc;padding-left:.42em}
+.td-k::before,.td-k::after{content:"";width:46px;height:1px;background:linear-gradient(90deg,transparent,#93b1dc88)}
+.td-k::after{transform:scaleX(-1)}
+.td-t{margin:0;font-family:var(--f-display);font-size:clamp(20px,3vw,32px);letter-spacing:.04em;color:var(--white);text-shadow:0 2px 24px #03060f}
+.touch2 .td-k,.touch2 .td-t{opacity:0;transform:translateY(-18px);transition:opacity .7s,transform .9s cubic-bezier(.2,1.25,.4,1)}
+.touch2 .td-t{transition-delay:.15s}
+.ground.down .touch2 .td-k,.ground.down .touch2 .td-t{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.touch2 .td-k,.touch2 .td-t{opacity:1;transform:none}}
