@@ -629,3 +629,12 @@ html{background:radial-gradient(120% 80% at 70% -10%,#16223f 0%,var(--deep) 50%,
   .ht-line{display:none}
   .hero-fallback{left:50%;right:auto;top:calc(var(--bar) + 30px);width:min(240px,60vw);transform:translateX(-50%)}
 }
+.patch-row{display:flex;align-items:center;gap:18px;margin:0 0 22px}
+.patch-row .kicker{margin:0;line-height:1.7}
+.patch-row .kicker span{color:var(--muted);letter-spacing:.1em;font-size:12px}
+.hero-patch{position:relative;flex:none;width:96px;height:96px;border-radius:50%;animation:patchIn 1s .15s cubic-bezier(.2,1.3,.4,1) both}
+.hero-patch img{width:100%;height:100%;border-radius:50%;display:block;box-shadow:0 10px 30px #0008,0 0 0 1px #93b1dc44}
+.hero-patch::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px dashed #93b1dc55;animation:spin 40s linear infinite}
+@keyframes patchIn{from{opacity:0;transform:scale(.6) rotate(-30deg)}to{opacity:1;transform:none}}
+.hero-copy3 .title span{animation-delay:calc(var(--i,0)*.09s + .45s)}
+@media (max-width:820px){.patch-row{justify-content:center;text-align:left;gap:14px;margin-bottom:14px}.hero-patch{width:56px;height:56px}.hero-patch::after{inset:-5px}.patch-row .kicker span{display:none}}

@@ -187,7 +187,7 @@ async function start() {
     const open = reduce ? 1 : Math.min(1, Math.max(0, (t - .5) / 1.4));
     const ob = 1 - Math.pow(1 - open, 3) * Math.cos(open * 9) * (1 - open);
     canopy.scale.set(.35 + .65 * ob, .62 * (.4 + .6 * ob), .35 + .65 * ob);
-    const baseX = wide ? Math.tan(camera.fov * Math.PI / 360) * 8 * camera.aspect * .37 : 0, baseY = wide ? -1.05 : .15;
+    const baseX = wide ? Math.tan(camera.fov * Math.PI / 360) * 8 * camera.aspect * .37 : 0, baseY = wide ? -1.05 : .3;
     sat.position.set(baseX + mx * .25, baseY + (1 - e) * 4 + Math.sin(t * .9) * .08 + p * 2.2, 0);
     // swinging under the canopy like a real payload
     sat.rotation.z = Math.sin(t * .85) * .06 + mx * .05;
