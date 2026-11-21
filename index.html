@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=23">
+<link rel="stylesheet" href="assets/css/style.css?v=24">
 </head>
 <body>
 
@@ -308,11 +308,89 @@
     </div>
   </section>
 
+  <!-- DOWNLINK: from the can to our ground station -->
+  <section id="verbinding" class="sec link-sec" data-phase="ZENDEN" data-phase-en="DOWNLINK">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="mono label">04 · <span data-en="THE LINK">DE VERBINDING</span></p>
+        <h2 data-en="From the can to the ground">Van het blikje naar de grond</h2>
+        <p class="sub" data-en="During the fall the CanSat sends its measurements down every second. On the ground our station is waiting to catch all of it.">Tijdens de val stuurt de CanSat elke seconde zijn metingen naar beneden. Op de grond staat ons grondstation klaar om alles op te vangen.</p>
+      </header>
+      <div class="link-scene" id="link-scene">
+        <svg class="link-svg" viewBox="0 0 1000 460" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16284f"/><stop offset="1" stop-color="#0a1328"/></linearGradient>
+          </defs>
+          <!-- ground -->
+          <path class="l-ground" d="M0 402 Q500 378 1000 402 L1000 460 L0 460Z"/>
+          <path class="l-contour" d="M40 428 Q300 410 520 424 T980 430M120 448 Q420 432 700 446"/>
+          <!-- signal path -->
+          <path id="link-path" class="l-path" d="M232 128 Q470 110 709 264"/>
+          <g class="l-waves"><circle cx="232" cy="128" r="6"/><circle cx="232" cy="128" r="6"/><circle cx="232" cy="128" r="6"/></g>
+          <!-- CanSat under its parachute -->
+          <g class="l-can">
+            <path class="l-canopy" d="M140 70C140 36 168 18 200 18s60 18 60 52c-9-6-18-6-25 0-8-6-17-6-25 0h-20c-7-6-16-6-25 0-7-6-16-6-25 0z"/>
+            <path class="l-canopy-line" d="M200 18c-12 12-16 32-15 52M200 18c12 12 16 32 15 52"/>
+            <path class="l-cord" d="M142 70l52 60M258 70l-52 60M175 70l22 60M225 70l-22 60"/>
+            <rect class="l-body" x="186" y="130" width="28" height="46" rx="4"/>
+            <rect class="l-band" x="186" y="144" width="28" height="12"/>
+            <path class="l-ant" d="M214 138L232 128"/>
+            <circle class="l-led" id="link-led" cx="232" cy="128" r="3.2"/>
+          </g>
+          <!-- ground station: tripod with a Yagi antenna pointed at the can -->
+          <g class="l-gs">
+            <path class="l-tripod" d="M800 290V332M800 332L768 402M800 332L800 402M800 332L832 402"/>
+            <path class="l-boom" d="M800 290L708.6 263.9"/>
+            <path class="l-el" d="M785.2 269.1L776.4 299.9M767.3 266.1L759.6 293.0M749.7 262.1L742.6 287.1M732.1 258.2L725.5 281.2M714.3 255.2L708.8 274.4"/>
+            <circle class="l-rx" id="link-rx" cx="708.6" cy="263.9" r="4"/>
+            <path class="l-cable" d="M800 300C820 340 850 380 872 368"/>
+            <!-- table + laptop -->
+            <path class="l-table" d="M852 370H990M864 370V402M978 370V402"/>
+            <path class="l-lap-base" d="M872 370H972L962 362H882Z"/>
+            <rect class="l-lap-scr" x="884" y="306" width="76" height="54" rx="3"/>
+            <path class="l-grid" d="M890 322H954M890 336H954M890 350H954"/>
+            <polyline id="link-chart" class="l-chart" points=""/>
+          </g>
+          <!-- handwritten notes -->
+          <g class="l-notes">
+            <text x="262" y="164" data-en="radio inside the can">zender in het blikje</text>
+            <path d="M258 158q-14-6-22-20"/>
+            <text x="580" y="332" data-en="our ground station">ons grondstation</text>
+            <path d="M700 324q34 4 54-14"/>
+            <text x="842" y="440" data-en="live chart">live grafiek</text>
+            <path d="M904 428q10-14 10-30"/>
+          </g>
+        </svg>
+        <div class="pkt" aria-live="off">
+          <p class="pkt-h mono"><span data-en="LAST PACKET">LAATSTE PAKKET</span> <i id="pkt-n">#0000</i></p>
+          <dl class="mono">
+            <div><dt data-en="time">tijd</dt><dd id="pkt-t">T+0 s</dd></div>
+            <div><dt data-en="altitude">hoogte</dt><dd id="pkt-h">1000 m</dd></div>
+            <div><dt data-en="pressure">luchtdruk</dt><dd id="pkt-p">898.7 hPa</dd></div>
+            <div><dt data-en="temperature">temperatuur</dt><dd id="pkt-c">6.0 °C</dd></div>
+          </dl>
+          <p class="pkt-note" data-en="example values, not real data yet">voorbeeldwaarden, nog geen echte data</p>
+        </div>
+      </div>
+      <ol class="link-steps">
+        <li><span class="ls-n mono">01</span><h3 data-en="Measure">Meten</h3>
+          <p data-en="The microcontroller reads the sensors and works out the altitude from the air pressure.">De microcontroller leest de sensoren uit en rekent uit de luchtdruk de hoogte uit.</p>
+          <div class="ls-who"><span class="av" style="--c:#d9844e" title="Alessio">A</span><span class="av" style="--c:#6a95d4" title="Xeno">X</span><span class="av-name">Alessio &amp; Xeno</span></div></li>
+        <li><span class="ls-n mono">02</span><h3 data-en="Send">Zenden</h3>
+          <p data-en="The radio module packs it all into a small message and sends it down, once a second.">De radiomodule stopt alles in een klein berichtje en stuurt het naar beneden, één keer per seconde.</p>
+          <div class="ls-who"><span class="av" style="--c:#6a95d4" title="Xeno">X</span><span class="av" style="--c:#d9844e" title="Alessio">A</span><span class="av-name">Xeno &amp; Alessio</span></div></li>
+        <li><span class="ls-n mono">03</span><h3 data-en="Receive">Ontvangen</h3>
+          <p data-en="On the ground an antenna picks up the signal and our own software puts it on a laptop as a live chart.">Op de grond vangt een antenne het signaal op en zet onze eigen software het als live grafiek op een laptop.</p>
+          <div class="ls-who"><span class="av" style="--c:#9d86c6" title="Thomas">T</span><span class="av" style="--c:#6a95d4" title="Xeno">X</span><span class="av-name">Thomas &amp; Xeno</span></div></li>
+      </ol>
+    </div>
+  </section>
+
   <!-- TEAM + TASKS -->
   <section id="team" class="sec" data-phase="DALING" data-phase-en="DESCENT">
     <div class="wrap">
       <header class="sec-head">
-        <p class="mono label">04 · <span data-en="THE TEAM">HET TEAM</span></p>
+        <p class="mono label">05 · <span data-en="THE TEAM">HET TEAM</span></p>
         <h2 data-en="Who we are">Wie we zijn</h2>
         <p class="sub" data-en="Put our first letters next to each other and you get ASTIX. Click a patch to see that person's tasks.">Zet onze voorletters naast elkaar en je krijgt ASTIX. Klik op een patch om de taken van die persoon te zien.</p>
       </header>
@@ -330,7 +408,7 @@
   <section id="route" class="sec" data-phase="LAATSTE METERS" data-phase-en="FINAL METRES">
     <div class="wrap">
       <header class="sec-head">
-        <p class="mono label">05 · <span data-en="ROAD TO ELSENBORN">OP WEG NAAR ELSENBORN</span></p>
+        <p class="mono label">06 · <span data-en="ROAD TO ELSENBORN">OP WEG NAAR ELSENBORN</span></p>
         <h2 data-en="The planning">De planning</h2>
         <p class="sub" data-en="The Belgian competition, school year 2026–2027. What has passed turns grey, the next step lights up.">De Belgische wedstrijd, schooljaar 2026–2027. Wat voorbij is wordt grijs, de volgende stap licht op.</p>
       </header>
@@ -405,6 +483,7 @@
 
 <script src="assets/js/main.js?v=10"></script>
 <script src="assets/js/nav.js?v=2"></script>
+<script src="assets/js/link.js?v=2"></script>
 <script type="module" src="assets/js/hero3d.js?v=4"></script>
 </body>
 </html>
