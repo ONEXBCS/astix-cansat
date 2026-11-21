@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/style.css?v=11">
 </head>
 <body>
 
@@ -68,22 +68,23 @@
 
 <main>
 
-  <!-- HERO -->
-  <section id="start" class="hero" data-phase="OP DE GROND" data-phase-en="ON THE PAD">
-    <div class="hero-in">
-      <div class="emblem">
-        <span class="orbit o1"></span><span class="orbit o2"></span>
-        <img src="assets/img/astix-logo.webp" alt="ASTIX-logo: de naam ASTIX met een baan rond de aarde" width="360" height="360">
+  <!-- HERO: a real 3D CanSat hanging under its parachute, above the Earth -->
+  <section id="start" class="hero hero3" data-phase="OP DE GROND" data-phase-en="ON THE PAD">
+    <canvas id="hero3d" aria-hidden="true"></canvas>
+    <div class="hero-fallback" aria-hidden="true"><img src="assets/img/astix-logo.webp" alt="" width="360" height="360"></div>
+    <div class="hero-copy3">
+      <p class="kicker mono">CANSAT BELGIUM · 2026–2027</p>
+      <h1 class="title" aria-label="ASTIX"><span>A</span><span>S</span><span>T</span><span>I</span><span>X</span></h1>
+      <p class="lead" data-en="We are five students building a satellite the size of a soft drink can. A rocket takes it up, a parachute brings it down, and on the way down it measures how restless the air is.">We zijn vijf leerlingen en we bouwen een satelliet zo groot als een blikje frisdrank. Een raket schiet hem omhoog, een parachute brengt hem terug, en onderweg meet hij hoe onrustig de lucht is.</p>
+      <div class="cta">
+        <a class="btn" href="#lancering" data-en="Launch ↓">Lanceren ↓</a>
+        <a class="btn ghost" href="https://www.instagram.com/astixcansat/" target="_blank" rel="noopener">@astixcansat</a>
       </div>
-      <div class="hero-copy">
-        <p class="kicker mono">CANSAT BELGIUM · 2026–2027</p>
-        <h1 class="title" aria-label="ASTIX"><span>A</span><span>S</span><span>T</span><span>I</span><span>X</span></h1>
-        <p class="lead" data-en="We are five students building a satellite the size of a soft drink can. A rocket takes it up, a parachute brings it down, and on the way down it measures how restless the air is.">We zijn vijf leerlingen en we bouwen een satelliet zo groot als een blikje frisdrank. Een raket schiet hem omhoog, een parachute brengt hem terug, en onderweg meet hij hoe onrustig de lucht is.</p>
-        <div class="cta">
-          <a class="btn" href="#lancering" data-en="Launch ↓">Lanceren ↓</a>
-          <a class="btn ghost" href="https://www.instagram.com/astixcansat/" target="_blank" rel="noopener">@astixcansat</a>
-        </div>
-      </div>
+    </div>
+    <div class="hero-tag mono" aria-hidden="true">
+      <span class="ht-line"></span>
+      <span><b>ASTIX-1</b> · 66 × 115 mm · 300–360 g</span>
+      <span class="ht-hint" data-en="drag to turn it">sleep om hem te draaien</span>
     </div>
     <p class="scroll-hint mono" data-en="scroll to launch">scroll om te lanceren</p>
   </section>
@@ -386,6 +387,7 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=9"></script>
+<script src="assets/js/main.js?v=10"></script>
+<script type="module" src="assets/js/hero3d.js?v=2"></script>
 </body>
 </html>
