@@ -696,15 +696,3 @@ html{background:radial-gradient(120% 80% at 70% -10%,#16223f 0%,var(--deep) 50%,
 @media (max-width:420px){.bar .ig-mini{display:none}.bar .lang{margin-left:auto}.brand span{font-size:14px}}
 body.no-scroll{overflow:hidden}
 
-/* v9 · jump cut for far links */
-.warp{position:fixed;inset:0;z-index:45;pointer-events:none;opacity:0;background:#03060f;display:grid;place-items:center;transition:opacity .4s ease}
-.warp.on{opacity:1;transition:opacity .3s ease}
-.warp-lines{position:absolute;inset:-20% 0;opacity:.55;
-  background:repeating-linear-gradient(90deg,transparent 0 37px,#93b1dc22 37px 38px,transparent 38px 91px,#93b1dc14 91px 92px);
-  -webkit-mask:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
-.warp.on .warp-lines{animation:streak .6s linear infinite}
-.warp.up.on .warp-lines{animation-direction:reverse}
-@keyframes streak{from{transform:translateY(-12%)}to{transform:translateY(12%)}}
-.warp-label{position:relative;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--ice);padding:10px 18px;border:1px solid #93b1dc44;border-radius:999px;background:#050a1c;
-  transform:translateY(8px);opacity:0;transition:transform .3s,opacity .2s}
-.warp.on .warp-label{transform:none;opacity:1}

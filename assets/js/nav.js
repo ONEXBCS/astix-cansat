@@ -6,7 +6,6 @@ const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const root=document.documentElement;
 const bar=$(".bar"),nav=$("#nav"),pill=$(".nav-pill"),links=$$(".nav a"),prog=$(".bar-progress i");
 const burger=$(".burger"),menu=$("#mnav"),mlinks=$$(".mnav a[href^='#']");
-const warp=$(".warp"),warpLabel=$(".warp-label");
 
 /* --- pill that glides to the hovered or active link --- */
 let hover=null;
@@ -59,30 +58,13 @@ addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 addEventListener("resize",()=>{if(innerWidth>760)setMenu(false)});
 menu&&menu.addEventListener("click",e=>{if(e.target===menu)setMenu(false)});
 
-/* --- jumping far: cut instead of scrolling the whole flight backwards --- */
-let busy=false;
-function go(target,label){
+/* --- jumping far: go straight there instead of scrolling the whole flight backwards --- */
+function go(target){
   const y=target.getBoundingClientRect().top+scrollY;
   const far=Math.abs(y-scrollY)>innerHeight*1.3;
-  if(!far||reduce||!warp){
-    root.style.scrollBehavior=far?"auto":"";
-    scrollTo({top:y,behavior:far?"auto":"smooth"});
-    root.style.scrollBehavior="";
-    return;
-  }
-  if(busy)return;busy=true;
-  warpLabel.textContent=label;
-  warp.classList.toggle("up",y<scrollY);
-  warp.classList.add("on");
-  setTimeout(()=>{
-    root.style.scrollBehavior="auto";
-    scrollTo(0,y);
-    root.style.scrollBehavior="";
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      warp.classList.remove("on");
-      setTimeout(()=>{busy=false},450);
-    }));
-  },330);
+  root.style.scrollBehavior="auto";
+  scrollTo({top:y,behavior:far||reduce?"auto":"smooth"});
+  root.style.scrollBehavior="";
 }
 document.addEventListener("click",e=>{
   const a=e.target.closest&&e.target.closest('a[href^="#"]');
@@ -93,10 +75,7 @@ document.addEventListener("click",e=>{
   e.preventDefault();
   const wasMenu=bar.classList.contains("menu-open");
   setMenu(false);
-  const label=(a.querySelector(".mn-t")||a).textContent.replace(/[↓↑↗]/g,"").trim();
-  const isEn=root.lang==="en";
-  const nice=id==="start"?(isEn?"Back to the pad":"Terug naar het platform"):label;
-  setTimeout(()=>go(t,nice),wasMenu?220:0);
+  setTimeout(()=>go(t),wasMenu?220:0);
   history.replaceState(null,"","#"+id);
 });
 
