@@ -610,7 +610,7 @@ html{background:radial-gradient(120% 80% at 70% -10%,#16223f 0%,var(--deep) 50%,
 .hero-fallback img{width:100%;height:auto;border-radius:50%;box-shadow:0 0 0 1px #93b1dc33}
 .hero3.no3d .hero-fallback{display:block}
 .hero3.no3d #hero3d{display:none}
-.hero-copy3{position:relative;z-index:2;max-width:640px;margin:0;padding:calc(var(--bar) + 18vh) clamp(16px,6vw,96px) 120px;pointer-events:none}
+.hero-copy3{position:relative;z-index:2;max-width:calc(640px + clamp(16px,9vw,220px));margin:0;padding:calc(var(--bar) + 18vh) 32px 120px clamp(16px,9vw,220px);pointer-events:none}
 .hero-copy3 a,.hero-copy3 button{pointer-events:auto}
 .hero-copy3 .title{font-size:clamp(60px,9vw,128px)}
 .hero-tag{position:absolute;z-index:2;right:clamp(16px,4vw,48px);bottom:64px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;pointer-events:none}
