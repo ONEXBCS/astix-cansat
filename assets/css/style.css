@@ -510,3 +510,79 @@ h3{font-size:19px;margin:0 0 10px}
 .brief-vis.turb{position:relative}
 .turb-note{position:absolute;top:10px;right:14px;z-index:2;font:700 21px var(--f-hand);color:#ffd88a;transform:rotate(-2deg);pointer-events:none}
 @media (max-width:600px){.hand{font-size:19px}.turb-note{font-size:18px}}
+
+/* ===================== v6: calmer palette, no neon ===================== */
+:root{
+  --deep:#070b17; --void:#04060d; --navy:#0e1628; --panel:#101a30; --line:#25314c;
+  --blue:#4c78bf; --blue-2:#93b1dc; --ice:#e1e6ef; --white:#f1efe9; --muted:#8c97ad;
+  --amber:#e0915a; --red:#cc6b5c; --green:#7fb79a;
+}
+html{background:radial-gradient(120% 80% at 70% -10%,#16223f 0%,var(--deep) 50%,var(--void) 100%) fixed}
+::selection{background:#4c78bf}
+/* no glows */
+.btn:hover{box-shadow:none;transform:translateY(-1px)}
+.btn{background:var(--white);border-color:var(--white);color:#0b1222}
+.btn.ghost{background:transparent;border-color:#93b1dc55;color:var(--ice)}
+.emblem img{box-shadow:0 0 0 1px #93b1dc33,0 20px 60px #0008}
+.orbit::before{box-shadow:none;background:var(--blue-2)}
+.orbit{border-color:#93b1dc2a}
+.probe svg{filter:none}
+.probe .chute{fill:#4c78bf}.probe .can-band{fill:#4c78bf}
+.patch.sel svg,.crew.done .patch.sel svg{filter:none;transform:scale(1.04)}
+.patch[aria-pressed="true"] svg{filter:none}
+.layer.sel .p-side,.layer.sel .p-top,.layer.sel .p-fill{filter:none}
+.layer.sel .p-side,.layer.sel .p-top{stroke:#f1efe9;stroke-width:1.6}
+.p-fill{fill:#4c78bf;stroke:#93b1dc}.p-top{fill:#1a2744;stroke:#93b1dc}.p-side{fill:#121c33;stroke:#93b1dc}.p-bot{fill:#0e1628;stroke:#93b1dc}
+.p-chip{stroke:#7fb79a}.p-trace{stroke:#7fb79a}.p-bat{stroke:#7fb79a;fill:#16271f}.p-led{fill:#cc6b5c}
+.stop.nextup{box-shadow:none}
+.stop.nextup::before{box-shadow:none;animation:none}
+.nav a:hover,.nav a.on{background:#ffffff10}
+.lang button[aria-pressed="true"]{background:var(--white);color:#0b1222}
+.label,.kicker{color:var(--blue-2)}
+.hud-read,.telemetry{background:#0b1222e6}
+.step,.mission,.col,.part-card,.crew-tasks .box,.stop{background:#0f182cdd}
+.card.hit{background:color-mix(in srgb,var(--c) 18%,transparent)!important}
+.chips li{background:#ffffff0d}
+/* instagram card: no rainbow neon */
+.ig-card{background:#0f182c;border:1px solid var(--line)}
+.ig-card::before{display:none}
+.ig-card:hover{box-shadow:none;border-color:#93b1dc66}
+.ig-ring{background:none;border:2px solid #93b1dc66;animation:none}
+.ig-ring img{animation:none}
+.ig-btn{background:var(--white);color:#0b1222}
+/* blueprint + gauges in the same calm colours */
+.blueprint{background-color:#0c1427;border-color:var(--line);background-image:linear-gradient(#93b1dc12 1px,transparent 1px),linear-gradient(90deg,#93b1dc12 1px,transparent 1px),linear-gradient(#93b1dc07 1px,transparent 1px),linear-gradient(90deg,#93b1dc07 1px,transparent 1px)}
+.bp-side{background:#0b1222cc;border-color:var(--line)}
+.bp-can path,.bp-can ellipse,.bp-can circle{stroke:#dfe4ec}
+.bp-dim path{stroke:#93b1dc}.bp-dim text{fill:#93b1dc}
+.g-fill{stroke:var(--amber)}.gauge:nth-child(2) .g-fill{stroke:var(--red)}
+.seat-row span{color:#0b1222}
+/* the hypothesis page now uses the site's own colours */
+.notebook{background-color:#0c1427;transform:rotate(-.6deg);box-shadow:0 20px 50px #0008;border:1px solid var(--line);
+  background-image:linear-gradient(#93b1dc14 1px,transparent 1px),linear-gradient(90deg,#93b1dc14 1px,transparent 1px)}
+.notebook::after{background:#cc6b5c55}
+.notebook .tape{background:#e1e6ef33;backdrop-filter:blur(2px)}
+.notebook .c-axis{stroke:#c9d2e2}
+.notebook .c-line.alt{stroke:#93b1dc}.notebook .c-line.pres{stroke:#7fb79a}.notebook .c-line.temp{stroke:#e0915a}
+.hand.blue{fill:#93b1dc}.hand.green{fill:#7fb79a}.hand.orange{fill:#e0915a}.hand.grey{fill:#8c97ad}
+.stamp-hyp rect{stroke:#cc6b5c}.stamp-hyp text{fill:#cc6b5c}
+.hand-cap{color:#e1e6ef}
+.hand-note,.scribble{color:#e0915a;fill:#e0915a}
+.turb-note{color:#e8c39a}
+/* plain second sentence */
+.lead-2{font-family:var(--f-body);font-weight:500;font-size:clamp(20px,2.2vw,26px);line-height:1.5;color:var(--ice);max-width:820px;margin:0 0 36px}
+.bigline{display:none}
+/* jury: honest proportions */
+.bars,.b{display:none}
+.crit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:900px}
+@media (max-width:760px){.crit{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.c{background:#0f182cdd;border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;display:grid;gap:6px;align-content:start}
+.c b{font:400 30px var(--f-display);color:var(--white)}
+.c span{font-size:14px;color:var(--muted);min-height:2.8em}
+.c i{height:4px;border-radius:4px;background:#ffffff12;position:relative;overflow:hidden}
+.c i::after{content:"";position:absolute;inset:0;width:calc(var(--v) * 1%);background:var(--blue-2);border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform 1s ease}
+.crit.in .c i::after{transform:scaleX(1)}
+.crit.in .c:nth-child(2) i::after{transition-delay:.1s}.crit.in .c:nth-child(3) i::after{transition-delay:.2s}.crit.in .c:nth-child(4) i::after{transition-delay:.3s}
+.planet{background:radial-gradient(circle at 50% 8%,#223a63 0%,#152643 18%,#0d172b 40%,#080d1a 70%);box-shadow:0 -4px 30px #93b1dc33,0 -1px 0 #93b1dc88,inset 0 30px 80px #4c78bf22}
+.lights{opacity:.22}
+.touch{color:var(--green)}

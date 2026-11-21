@@ -11,11 +11,11 @@ const L=(nl,en)=>lang==="en"?en:nl;
 
 /* ---------------- data ---------------- */
 const CREW={            // in this order the first letters spell A-S-T-I-X
-  Alessio:{c:"#ff8a3d",nl:"Elektronica & code",en:"Electronics & code",sym:"chip"},
-  Sam:{c:"#ffd84a",nl:"Parachute & 3D",en:"Parachute & 3D",sym:"chute"},
-  Thomas:{c:"#c77dff",nl:"Grondstation & kaart",en:"Ground station & map",sym:"dish"},
-  Ilco:{c:"#4fe3a1",nl:"Ontwerp & data",en:"Design & data",sym:"wave"},
-  Xeno:{c:"#4aa0ff",nl:"Software & radio",en:"Software & radio",sym:"radio"},
+  Alessio:{c:"#d9844e",nl:"Elektronica & code",en:"Electronics & code",sym:"chip"},
+  Sam:{c:"#d6b25a",nl:"Parachute & 3D",en:"Parachute & 3D",sym:"chute"},
+  Thomas:{c:"#9d86c6",nl:"Grondstation & kaart",en:"Ground station & map",sym:"dish"},
+  Ilco:{c:"#6aae8e",nl:"Ontwerp & data",en:"Design & data",sym:"wave"},
+  Xeno:{c:"#6a95d4",nl:"Software & radio",en:"Software & radio",sym:"radio"},
 };
 const NAMES=Object.keys(CREW);
 const ALL="ALL";
@@ -93,7 +93,7 @@ function applyLang(){
     el.textContent=lang==="en"?el.dataset.en:el.dataset.nl;
   });
   $$(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
-  splitBigline();renderCrew();renderBoard();renderRoute();if(curPart)renderPart(curPart);
+  renderCrew();renderBoard();renderRoute();if(curPart)renderPart(curPart);
   lastPhase=null;frame(true);
 }
 $$(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;try{localStorage.setItem("astix-lang",lang)}catch(e){}applyLang()}));
@@ -508,7 +508,7 @@ setInterval(()=>{if(performance.now()-lastT>200){vel*=.6;if(vel<.05)vel=0;hud.ve
     t+=0.016;ctx.fillStyle="rgba(4,9,22,0.13)";ctx.fillRect(0,0,W,H);
     for(const p of parts){
       const a=field(p.x,p.y),sp=1.2+p.x/W*1.6,nx=p.x+Math.cos(a)*sp,ny=p.y+Math.sin(a)*sp,r=p.x/W;
-      ctx.strokeStyle=`hsla(${215-r*180},95%,${62+r*8}%,.55)`;ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(nx,ny);ctx.stroke();
+      ctx.strokeStyle=`hsla(${214-r*190},${38+r*20}%,${66+r*6}%,.5)`;ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(nx,ny);ctx.stroke();
       p.x=nx;p.y=ny;
       if(p.x>W||p.y<0||p.y>H||p.x<0||Math.random()<0.004){p.x=Math.random()*W*0.15;p.y=Math.random()*H}
     }
