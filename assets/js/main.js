@@ -3,6 +3,8 @@
 "use strict";
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
 let lang="nl";
 try{const l=localStorage.getItem("astix-lang");if(l==="en"||l==="nl")lang=l}catch(e){}
 const L=(nl,en)=>lang==="en"?en:nl;
@@ -20,7 +22,7 @@ const ALL="ALL";
 const GROUPS=[
   {id:"comp",nl:"Componenten",en:"Components"},
   {id:"mech",nl:"Mechanisch ontwerp",en:"Mechanical design"},
-  {id:"soft",nl:"Software",en:"Software design"},
+  {id:"soft",nl:"Software",en:"Software"},
   {id:"sec",nl:"Secundaire missie",en:"Secondary mission"},
   {id:"test",nl:"Testen",en:"Testing"},
   {id:"out",nl:"Outreach",en:"Outreach"},
@@ -44,19 +46,30 @@ const TASKS=[
   {g:"out",id:"report",nl:"Voortgangsrapport",en:"Progress report",who:ALL},
 ];
 const PARTS={
-  parachute:{k:"01 / PARACHUTE",nl:["Parachute","Remt de val af, zodat de CanSat rustig genoeg zakt om onderweg goed te meten en heel te landen. We testen hem met echte valtests."],
-    en:["Parachute","Slows the fall so the CanSat comes down calmly enough to measure properly and land in one piece. We check it with real drop tests."],tasks:["chute","drop"]},
-  radio:{k:"02 / RADIO",nl:["Radio en antenne","Stuurt de metingen elke seconde naar het grondstation. Op de grond vangen we ze op en tonen we ze live."],
-    en:["Radio and antenna","Sends the measurements to the ground station every second. On the ground we receive them and show them live."],tasks:["comms","gs"]},
-  mcu:{k:"03 / BRAIN",nl:["Microcontroller","Het brein van de CanSat. Leest de sensoren uit, rekent, en geeft de data door aan de radio."],
-    en:["Microcontroller","The brain of the CanSat. Reads the sensors, does the maths and hands the data to the radio."],tasks:["mcu","components"]},
-  sensors:{k:"04 / SENSORS",nl:["Sensoren","Meten temperatuur en luchtdruk voor de primaire missie, en beweging en schokken voor onze turbulentiemissie."],
-    en:["Sensors","Measure temperature and air pressure for the primary mission, and movement and shocks for our turbulence mission."],tasks:["components","research","etest"]},
-  power:{k:"05 / POWER",nl:["Batterij","Houdt alles aan, van op het lanceerplatform tot na de landing."],
-    en:["Battery","Keeps everything running, from the launch pad until after the landing."],tasks:["components","etest"]},
-  shell:{k:"06 / SHELL",nl:["3D-geprinte behuizing","Zelf ontworpen en zelf geprint. Houdt alle lagen op hun plek en moet de klap van de landing overleven."],
-    en:["3D-printed shell","Designed and printed by us. Holds every layer in place and has to survive the landing."],tasks:["cad","print"]},
+  parachute:{k:"01 / PARACHUTE",nl:["Parachute","Zonder parachute is het een blikje dat van een kilometer hoog valt. Hij moet de CanSat zo afremmen dat we genoeg tijd hebben om te meten, en dat er na de landing nog iets heel is. Dat testen we door hem echt te laten vallen."],
+    en:["Parachute","Without a parachute it is just a can falling from a kilometre up. It has to slow the CanSat down enough to give us time to measure, and to leave something intact after the landing. We test that by actually dropping it."],tasks:["chute","drop"]},
+  radio:{k:"02 / RADIO",nl:["Radio en antenne","Stuurt tijdens de vlucht de metingen naar beneden. Op de grond vangt ons grondstation ze op en zetten we ze meteen op een scherm."],
+    en:["Radio and antenna","Sends the measurements down during the flight. On the ground our ground station picks them up and puts them straight on a screen."],tasks:["comms","gs"]},
+  mcu:{k:"03 / BRAIN",nl:["Microcontroller","De kleine computer die alles aanstuurt. Hij leest de sensoren uit, rekent de hoogte uit en geeft alles door aan de radio."],
+    en:["Microcontroller","The small computer that runs everything. It reads the sensors, works out the altitude and passes everything to the radio."],tasks:["mcu","components"]},
+  sensors:{k:"04 / SENSORS",nl:["Sensoren","Luchtdruk en temperatuur voor de primaire missie. Voor onze turbulentiemissie meten we ook hoe de CanSat beweegt, slingert en draait."],
+    en:["Sensors","Air pressure and temperature for the primary mission. For our turbulence mission we also measure how the CanSat moves, swings and turns."],tasks:["components","research","etest"]},
+  power:{k:"05 / POWER",nl:["Batterij","Moet het volhouden van het wachten op het lanceerplatform tot we de CanSat na de landing terugvinden."],
+    en:["Battery","Has to last from the wait on the launch pad until we find the CanSat again after landing."],tasks:["components","etest"]},
+  shell:{k:"06 / SHELL",nl:["Behuizing","Zelf getekend en zelf geprint. Alles moet erin passen, het geheel moet tussen 300 en 360 gram wegen, en hij moet 11 G en de landing overleven."],
+    en:["Shell","Designed and printed by us. Everything has to fit, the whole thing has to weigh between 300 and 360 grams, and it has to survive 11 G and the landing."],tasks:["cad","print"]},
 };
+const ROUTE=[
+  {s:"2026-10-09",nl:["Voorstel insturen","Ons idee voor de secundaire missie, uitgeschreven voor ESERO."],en:["Proposal deadline","Our idea for the secondary mission, written up for ESERO."]},
+  {s:"2026-10-16",nl:["Selectie","Tot 60 Belgische teams mogen meedoen."],en:["Selection","Up to 60 Belgian teams get in."]},
+  {s:"2026-11-12",e:"2026-11-13",nl:["Workshop leerkrachten","Twee dagen in Brussel."],en:["Teacher workshop","Two days in Brussels."]},
+  {s:"2027-01-05",e:"2027-01-07",nl:["Tech support days, ronde 1","Een halfuur met de experts om ons ontwerp te checken."],en:["Tech support days, round 1","Half an hour with the experts to check our design."]},
+  {s:"2027-01-13",nl:["Voortgangsrapport","Deadline van het rapport. Daarna volgt de selectie voor de halve finale."],en:["Progress report","Report deadline, then the selection for the semi-final."]},
+  {s:"2027-03-09",e:"2027-03-11",nl:["Tech support days, ronde 2","Laatste check voor de halve finale."],en:["Tech support days, round 2","Last check before the semi-final."]},
+  {s:"2027-03-17",nl:["Halve finale","Presentatie voor de jury in Brussel. 30 teams gaan door."],en:["Semi-final","Presentation for the jury in Brussels. 30 teams go through."]},
+  {s:"2027-04-22",e:"2027-04-24",big:1,nl:["Lancering en finale","Elsenborn. De 30 CanSats gaan de lucht in en er wordt één Belgische winnaar gekozen."],en:["Launch and final","Elsenborn. All 30 CanSats fly and one Belgian winner is picked."]},
+  {s:"2027-06-01",e:"2027-06-30",month:1,nl:["ESTEC","Het winnende team gaat naar ESA in Noordwijk."],en:["ESTEC","The winning team goes to ESA in Noordwijk."]},
+];
 const whoOf=t=>t.who===ALL?NAMES:t.who;
 const taskById=id=>TASKS.find(t=>t.id===id);
 
@@ -80,11 +93,11 @@ function applyLang(){
     el.textContent=lang==="en"?el.dataset.en:el.dataset.nl;
   });
   $$(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
-  renderCrew();renderBoard();renderPart(curPart);hud.phaseNow=null;tick(true);
+  splitBigline();renderCrew();renderBoard();renderRoute();if(curPart)renderPart(curPart);
+  lastPhase=null;frame(true);
 }
 $$(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;try{localStorage.setItem("astix-lang",lang)}catch(e){}applyLang()}));
 
-/* ---------------- avatars ---------------- */
 const av=n=>`<span class="av" style="--c:${CREW[n].c}" title="${n}">${n[0]}</span>`;
 
 /* ---------------- crew patches ---------------- */
@@ -113,17 +126,18 @@ function patchSVG(n){
 }
 function renderCrew(){
   const box=$("#crew");if(!box)return;
-  box.innerHTML=NAMES.map(n=>`<button class="patch" type="button" data-n="${n}" aria-pressed="${selCrew===n}" style="--c:${CREW[n].c}">
+  box.innerHTML=NAMES.map((n,i)=>`<button class="patch" type="button" data-n="${n}" aria-pressed="${selCrew===n}" style="--c:${CREW[n].c};--i:${i}">
     ${patchSVG(n)}<span class="pname">${n}</span><span class="prole">${L(CREW[n].nl,CREW[n].en)}</span></button>`).join("");
   $$(".patch",box).forEach(b=>b.addEventListener("click",()=>{selCrew=selCrew===b.dataset.n?null:b.dataset.n;renderCrew()}));
   const out=$("#crew-tasks");
-  if(!selCrew){out.innerHTML=`<p class="hint">${L("// kies een patch","// pick a patch")}</p>`;return}
+  if(!selCrew){out.innerHTML=`<p class="hint">${L("// klik op een patch","// click a patch")}</p>`;return}
   const mine=TASKS.filter(t=>whoOf(t).includes(selCrew));
+  const gname=t=>{const g=GROUPS.find(g=>g.id===t.g);return L(g.nl,g.en)};
   out.innerHTML=`<div class="box" style="--c:${CREW[selCrew].c}"><h3>${selCrew} · ${mine.length} ${L("taken","tasks")}</h3><ul>${
-    mine.map(t=>`<li>${L(t.nl,t.en)}<span>${L(GROUPS.find(g=>g.id===t.g).nl,GROUPS.find(g=>g.id===t.g).en)}</span></li>`).join("")}</ul></div>`;
+    mine.map(t=>`<li>${L(t.nl,t.en)}<span>${gname(t)}</span></li>`).join("")}</ul></div>`;
 }
 
-/* ---------------- mission board ---------------- */
+/* ---------------- task board ---------------- */
 let filter=null;
 function renderBoard(){
   const f=$("#filters"),b=$("#board");if(!f||!b)return;
@@ -135,23 +149,22 @@ function renderBoard(){
     const ts=TASKS.filter(t=>t.g===g.id);
     return `<div class="col"><h3>${L(g.nl,g.en)}<small>${ts.length}</small></h3>${ts.map(t=>{
       const all=t.who===ALL,hit=filter&&whoOf(t).includes(filter);
-      return `<div class="card${all?" all":""}${hit?" hit":""}"><span>${L(t.nl,t.en)}</span><span class="avs">${all?L("HELE CREW","WHOLE CREW"):t.who.map(av).join("")}</span></div>`;
+      return `<div class="card${all?" all":""}${hit?" hit":""}"><span>${L(t.nl,t.en)}</span><span class="avs">${all?L("IEDEREEN","EVERYONE"):t.who.map(av).join("")}</span></div>`;
     }).join("")}</div>`;
   }).join("");
 }
 
-/* ---------------- exploded CanSat ---------------- */
+/* ---------------- the can ---------------- */
 let curPart=null;
-const explode=$(".explode"),layersEl=$("#layers");
+const layersEl=$("#layers");
 function renderPart(p){
-  if(!p)return;
   const d=PARTS[p];
   $("#part-k").textContent=d.k;
   const [t,desc]=d[lang];
   const tt=$("#part-t"),dd=$("#part-d");
   tt.textContent=t;dd.textContent=desc;tt.dataset.nl=d.nl[0];tt.dataset.en=d.en[0];dd.dataset.nl=d.nl[1];dd.dataset.en=d.en[1];
   $("#part-who").innerHTML=d.tasks.map(id=>{const tk=taskById(id);
-    return `<div class="who-row"><span class="task">${L(tk.nl,tk.en)}</span><span class="avs">${whoOf(tk).map(av).join("")}</span><span class="av-name">${tk.who===ALL?L("hele crew","whole crew"):tk.who.join(" & ")}</span></div>`}).join("");
+    return `<div class="who-row"><span class="task">${L(tk.nl,tk.en)}</span><span class="avs">${whoOf(tk).map(av).join("")}</span><span class="av-name">${tk.who===ALL?L("iedereen","everyone"):tk.who.join(" & ")}</span></div>`}).join("");
 }
 function pick(p){
   curPart=p;
@@ -163,90 +176,179 @@ $$(".layer").forEach(g=>{
   g.addEventListener("click",()=>pick(g.dataset.part));
   g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(g.dataset.part)}});
 });
-/* the can starts closed and opens up when you scroll to it */
-if(explode&&!reduce){
-  explode.classList.add("closed");
-  new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){setTimeout(()=>explode.classList.remove("closed"),250);o.disconnect()}}),{threshold:.45}).observe(explode);
+
+/* ---------------- big line: words light up while you scroll ---------------- */
+const bigline=$("#bigline");let words=[];
+function splitBigline(){
+  if(!bigline)return;
+  const txt=lang==="en"?bigline.dataset.en:(bigline.dataset.nl||bigline.textContent);
+  if(bigline.dataset.nl===undefined)bigline.dataset.nl=bigline.textContent;
+  bigline.innerHTML=txt.split(" ").map(w=>`<span class="w">${w}</span>`).join(" ");
+  words=$$(".w",bigline);
 }
 
-/* ---------------- reveal ---------------- */
-const rvTargets=$$(".sec-head,.step,.mission,.turb,.explode,.crew,.filters,.board,.specs");
-rvTargets.forEach((el,i)=>{el.classList.add("rv");el.style.transitionDelay=(el.classList.contains("step")||el.classList.contains("mission")?(i%3)*0.1:0)+"s"});
-if("IntersectionObserver" in window&&!reduce){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
-  rvTargets.forEach(el=>io.observe(el));
-}else rvTargets.forEach(el=>el.classList.add("in"));
+/* ---------------- planning ---------------- */
+const DAY=864e5;
+function fmt(d1,d2,month){
+  const m=lang==="en"?["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]:["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+  const a=new Date(d1+"T12:00:00"),b=d2?new Date(d2+"T12:00:00"):null;
+  if(month)return `${m[a.getMonth()]} ${a.getFullYear()}`;
+  if(b)return `${a.getDate()}–${b.getDate()} ${m[b.getMonth()]} ${b.getFullYear()}`;
+  return `${a.getDate()} ${m[a.getMonth()]} ${a.getFullYear()}`;
+}
+function renderRoute(){
+  const ol=$("#stops");if(!ol)return;
+  const today=new Date();today.setHours(0,0,0,0);
+  let nextIdx=ROUTE.findIndex(r=>new Date((r.e||r.s)+"T23:59:59")>=today);
+  ol.innerHTML=ROUTE.map((r,i)=>{
+    const past=new Date((r.e||r.s)+"T23:59:59")<today,now=i===nextIdx;
+    const [t,x]=r[lang];
+    return `<li class="stop${past?" past":""}${now?" nextup":""}${r.big?" big":""}" style="--f:${(i+.5)/ROUTE.length}">
+      <span class="d">${fmt(r.s,r.e,r.month)}</span><span class="t">${t}${now?`<span class="tag2">${L("VOLGENDE","NEXT")}</span>`:""}</span><span class="x">${x}</span></li>`;
+  }).join("");
+  const nx=$("#next");
+  if(nextIdx>=0){
+    const r=ROUTE[nextIdx],days=Math.ceil((new Date(r.s+"T00:00:00")-today)/DAY);
+    nx.innerHTML=days>0?`${L("Volgende stap","Next step")}: ${r[lang][0]} · ${L("nog","in")} <b>${days}</b> ${L(days===1?"dag":"dagen",days===1?"day":"days")}`:`${L("Nu bezig","Happening now")}: <b>${r[lang][0]}</b>`;
+  }else nx.textContent="";
+  // days until launch, as a bonus line in the launch caption block
+  routeStops=$$(".stop",ol);
+}
+let routeStops=[];
 
-/* ---------------- altimeter HUD ---------------- */
-const hud={el:$(".hud"),probe:$("#probe"),alt:$("#alt"),vel:$("#vel"),phase:$("#phase"),lastAlt:1000,lastT:performance.now(),v:0,phaseNow:null};
-const secs=$$("[data-phase]");
-const navLinks=$$(".nav a");
-const ground=$("#ground");
-let tops=[],maxScroll=1;
+/* ---------------- reveal on scroll ---------------- */
+const rvTargets=$$(".sec-head,.mission,.turb,.filters,.board,.specs,.ig-card,.jury h3");
+rvTargets.forEach(el=>el.classList.add("rv"));
+const once=(els,cls,th=.2)=>{
+  if(!("IntersectionObserver" in window)||reduce){els.forEach(e=>e&&e.classList.add(cls));return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add(cls);io.unobserve(e.target)}}),{threshold:th});
+  els.forEach(e=>e&&io.observe(e));
+};
+once(rvTargets,"in",.15);
+once([$("#bars")],"in",.4);
+const crewEl=$("#crew");
+once([crewEl],"in",.3);
+if(crewEl)new MutationObserver(()=>{}).observe(crewEl,{attributes:true});
+setTimeout(function waitStamp(){if(crewEl.classList.contains("in"))setTimeout(()=>crewEl.classList.add("done"),1400);else setTimeout(waitStamp,300)},300);
+
+/* ---------------- scroll engine: launch, HUD, can, route, big line ---------------- */
+const hud={el:$(".hud"),alt:$("#alt"),vel:$("#vel"),phase:$("#phase"),probe:$("#probe")};
+const launch=$("#lancering"),rocket=$("#rocket"),count=$("#count"),caps=$$("#captions li");
+const lAlt=$("#l-alt"),lVel=$("#l-vel"),lG=$("#l-g"),lGbar=$("#l-gbar");
+const pinCan=$("#ontwerp"),routeBox=$("#route-box"),routePath=$("#route-path");
+const secs=$$("[data-phase]"),navLinks=$$(".nav a"),ground=$("#ground");
+let tops=[],maxScroll=1,lastAlt=0,lastT=performance.now(),vel=0,lastPhase=null,lastCount="",lastCap=-1;
 function measure(){tops=secs.map(s=>s.offsetTop);maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight)}
-measure();addEventListener("resize",measure);addEventListener("load",measure);
+measure();addEventListener("resize",()=>{measure();frame(true)});addEventListener("load",measure);
 if("ResizeObserver" in window)new ResizeObserver(measure).observe(document.body);
-let ticking=false;
-function tick(force){
-  const p=Math.min(1,Math.max(0,scrollY/maxScroll));
-  const alt=Math.round(1000*(1-p));
-  const now=performance.now(),dt=Math.max(16,now-hud.lastT)/1000;
-  const inst=Math.abs(alt-hud.lastAlt)/dt;
-  hud.v=hud.v*0.8+Math.min(inst,99)*0.2;
-  hud.lastAlt=alt;hud.lastT=now;
-  hud.alt.textContent=alt;
-  hud.vel.textContent=hud.v.toFixed(1);
-  if(hud.probe)hud.probe.style.top=(p*100)+"%";
-  // phase: the section whose top is above the middle of the screen
-  const mid=scrollY+innerHeight*.5;let cur=null;
-  secs.forEach((s,i)=>{if(tops[i]<=mid)cur=s});
-  const landed=p>.985;
-  const label=landed?L("GELAND","TOUCHDOWN"):cur?(lang==="en"?cur.dataset.phaseEn:cur.dataset.phase):(scrollY<40?"T-0":L("LOSGELATEN","RELEASED"));
-  if(label!==hud.phaseNow||force){hud.phase.textContent=label;hud.phaseNow=label}
+
+function flight(p){
+  // simple made-up curve that respects ESERO's maxima: 11 G, 550 km/h, ~1 km
+  const ign=.14,burnout=.34,apo=.86;
+  if(p<ign)return{alt:0,v:0,g:1,burn:0};
+  const q=(p-ign)/(apo-ign);
+  const alt=Math.round(1000*clamp(1-Math.pow(1-clamp(q),2.2)));
+  let v,g;
+  if(p<burnout){const b=(p-ign)/(burnout-ign);v=550*Math.sin(b*Math.PI/2);g=1+10*Math.sin(Math.min(1,b*1.6)*Math.PI/2)*(b<.8?1:(1-b)*5)}
+  else{const c=clamp((p-burnout)/(apo-burnout));v=550*(1-c)*(1-c*.1);g=.3}
+  return{alt,v:Math.max(0,Math.round(v)),g:Math.max(0,g),burn:p<burnout?1:clamp(1-(p-burnout)*20)};
+}
+
+function frame(force){
+  const y=scrollY,H=innerHeight;
+  /* launch */
+  let pL=0,inLaunch=false,launched=false,lf={alt:0};
+  if(launch){
+    const top=launch.offsetTop,len=launch.offsetHeight-H;
+    pL=clamp((y-top)/len);inLaunch=y>=top-H*.5&&y<=top+len;launched=y>top+len;
+    launch.style.setProperty("--p",pL.toFixed(4));
+    lf=flight(pL);
+    const rise=ease(clamp((pL-.12)/.3))*H*(innerWidth<600?.16:.3);
+    launch.style.setProperty("--rise",rise.toFixed(1));
+    launch.style.setProperty("--burn",lf.burn.toFixed(2));
+    launch.style.setProperty("--smoke",(rise>0?Math.max(.15,lf.burn*.9):0).toFixed(2));
+    launch.style.setProperty("--tilt",(Math.sin(pL*40)*lf.burn*1.2).toFixed(2));
+    launch.classList.toggle("sep",pL>.86);
+    lAlt.textContent=lf.alt+" m";lVel.textContent=lf.v+(lang==="en"?" km/h":" km/u");lG.textContent=lf.g.toFixed(1)+" G";
+    lGbar.style.setProperty("--gw",(lf.g/11*100).toFixed(1)+"%");
+    const c=pL<=0?"":pL<.04?"3":pL<.08?"2":pL<.12?"1":pL<.17?"GO":"";
+    if(c!==lastCount){count.textContent=c;count.classList.remove("pop");void count.offsetWidth;if(c)count.classList.add("pop");lastCount=c}
+    let ci=-1;caps.forEach((li,i)=>{if(pL>=+li.dataset.at)ci=i});
+    if(ci!==lastCap){caps.forEach((li,i)=>li.classList.toggle("on",i===ci));lastCap=ci}
+  }
+  /* HUD altitude: on the pad, up with the rocket, then down with the parachute */
+  let alt,ascent=false;
+  if(!launched){alt=inLaunch?lf.alt:0;ascent=pL<.86}
+  else{const start=launch.offsetTop+launch.offsetHeight-H;alt=Math.round(1000*(1-clamp((y-start)/Math.max(1,maxScroll-start))))}
+  const now=performance.now(),dt=Math.max(16,now-lastT)/1000;
+  vel=vel*.8+Math.min(Math.abs(alt-lastAlt)/dt,99)*.2;lastAlt=alt;lastT=now;
+  hud.alt.textContent=alt;hud.vel.textContent=vel.toFixed(1);
+  hud.probe.style.top=(100-alt/10)+"%";
+  const landed=launched&&y>=maxScroll-4;
+  if(landed){alt=0;hud.alt.textContent=0}
+  hud.el.classList.toggle("ascent",ascent&&!launched);
   hud.el.classList.toggle("landed",landed);
   ground.classList.toggle("down",landed);
+  const mid=y+H*.5;let cur=null;
+  secs.forEach((s,i)=>{if(tops[i]<=mid)cur=s});
+  const label=landed?L("GELAND","TOUCHDOWN"):(!launched&&pL>.86)?L("UITGEWORPEN","DEPLOYED"):cur?(lang==="en"?cur.dataset.phaseEn:cur.dataset.phase):"T-0";
+  if(label!==lastPhase||force){hud.phase.textContent=label;lastPhase=label}
   hud.el.classList.toggle("shake",!landed&&cur&&cur.id==="missie");
-  // active menu item
-  navLinks.forEach(a=>a.classList.toggle("on",cur&&a.getAttribute("href")==="#"+cur.id));
+  navLinks.forEach(a=>a.classList.toggle("on",!!cur&&a.getAttribute("href")==="#"+cur.id));
+  /* can opens */
+  if(pinCan){
+    const r=pinCan.getBoundingClientRect();
+    const pinned=pinCan.offsetHeight>H*1.2;
+    const e=pinned?clamp((-r.top)/(pinCan.offsetHeight-H)*1.6):clamp((H*.85-r.top)/(H*.7));
+    layersEl.style.setProperty("--e",ease(e).toFixed(3));
+  }
+  /* big line */
+  if(words.length){
+    const r=bigline.getBoundingClientRect();
+    const f=clamp((H*.8-r.top)/(r.height+H*.35));
+    const n=Math.round(f*words.length);
+    words.forEach((w,i)=>w.classList.toggle("lit",i<n));
+  }
+  /* route draws itself */
+  if(routeBox){
+    const r=routeBox.getBoundingClientRect();
+    const d=clamp((H*.75-r.top)/(r.height));
+    routeBox.style.setProperty("--draw",d.toFixed(3));
+    routeStops.forEach(s=>s.classList.toggle("shown",d>=parseFloat(s.style.getPropertyValue("--f"))-.04));
+  }
 }
-addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;tick()})},{passive:true});
-/* velocity falls back to 0 when you stop scrolling */
-setInterval(()=>{if(performance.now()-hud.lastT>200){hud.v*=0.6;if(hud.v<0.05)hud.v=0;hud.vel.textContent=hud.v.toFixed(1)}},120);
+let ticking=false;
+addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;frame()})},{passive:true});
+setInterval(()=>{if(performance.now()-lastT>200){vel*=.6;if(vel<.05)vel=0;hud.vel.textContent=vel.toFixed(1)}},120);
 
 /* ---------------- turbulence canvas ---------------- */
 (function turbulence(){
   const cv=$("#turb");if(!cv)return;
-  const ctx=cv.getContext("2d");let W=0,H=0,dpr=1,parts=[],on=false,raf=0,t=0;
+  const ctx=cv.getContext("2d");let W=0,H=0,parts=[],on=false,raf=0,t=0;
   const mouse={x:-999,y:-999};
-  function size(){dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-    parts=Array.from({length:Math.round(W*H/1400)},()=>({x:Math.random()*W,y:Math.random()*H,a:Math.random()}));ctx.fillStyle="#040916";ctx.fillRect(0,0,W,H)}
+  function size(){const dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    parts=Array.from({length:Math.round(W*H/1300)},()=>({x:Math.random()*W,y:Math.random()*H}));ctx.fillStyle="#040916";ctx.fillRect(0,0,W,H)}
   function field(x,y){
-    const r=x/W;                                   // 0 = calm (left) .. 1 = turbulent (right)
-    const k=0.4+r*r*3.2;
-    let ang=Math.sin(y*0.012+t*0.6)*0.15*(1-r)+(Math.sin(x*0.02*k+t*1.3)+Math.cos(y*0.023*k-t*1.1)+Math.sin((x+y)*0.011*k+t))*r*r*1.1;
-    const dx=x-mouse.x,dy=y-mouse.y,d2=dx*dx+dy*dy;
-    if(d2<9000){ang+=Math.atan2(dy,dx)+1.6;}
-    return ang;
+    const r=x/W,k=0.4+r*r*3.2;
+    let a=Math.sin(y*0.012+t*0.6)*0.15*(1-r)+(Math.sin(x*0.02*k+t*1.3)+Math.cos(y*0.023*k-t*1.1)+Math.sin((x+y)*0.011*k+t))*r*r*1.1;
+    const dx=x-mouse.x,dy=y-mouse.y;if(dx*dx+dy*dy<9000)a+=Math.atan2(dy,dx)+1.6;
+    return a;
   }
-  function frame(){
-    t+=0.016;
-    ctx.fillStyle="rgba(4,9,22,0.13)";ctx.fillRect(0,0,W,H);
+  function step(){
+    t+=0.016;ctx.fillStyle="rgba(4,9,22,0.13)";ctx.fillRect(0,0,W,H);
     for(const p of parts){
-      const a=field(p.x,p.y),sp=1.2+p.x/W*1.6;
-      const nx=p.x+Math.cos(a)*sp,ny=p.y+Math.sin(a)*sp;
-      const r=p.x/W;
-      ctx.strokeStyle=`hsla(${215-r*180},95%,${62+r*8}%,${0.55})`;
-      ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(nx,ny);ctx.stroke();
+      const a=field(p.x,p.y),sp=1.2+p.x/W*1.6,nx=p.x+Math.cos(a)*sp,ny=p.y+Math.sin(a)*sp,r=p.x/W;
+      ctx.strokeStyle=`hsla(${215-r*180},95%,${62+r*8}%,.55)`;ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(nx,ny);ctx.stroke();
       p.x=nx;p.y=ny;
       if(p.x>W||p.y<0||p.y>H||p.x<0||Math.random()<0.004){p.x=Math.random()*W*0.15;p.y=Math.random()*H}
     }
-    if(on)raf=requestAnimationFrame(frame);
+    if(on)raf=requestAnimationFrame(step);
   }
   cv.addEventListener("pointermove",e=>{const b=cv.getBoundingClientRect();mouse.x=e.clientX-b.left;mouse.y=e.clientY-b.top});
   cv.addEventListener("pointerleave",()=>{mouse.x=mouse.y=-999});
-  size();addEventListener("resize",()=>{size()});
-  if(reduce){for(let i=0;i<120;i++)frame();return}
-  new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}}).observe(cv);
+  size();addEventListener("resize",size);
+  if(reduce){for(let i=0;i<120;i++)step();return}
+  new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on){cancelAnimationFrame(raf);raf=requestAnimationFrame(step)}}).observe(cv);
 })();
 
 $("#year").textContent=new Date().getFullYear();
