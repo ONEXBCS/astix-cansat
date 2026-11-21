@@ -586,3 +586,15 @@ html{background:radial-gradient(120% 80% at 70% -10%,#16223f 0%,var(--deep) 50%,
 .planet{background:radial-gradient(circle at 50% 8%,#223a63 0%,#152643 18%,#0d172b 40%,#080d1a 70%);box-shadow:0 -4px 30px #93b1dc33,0 -1px 0 #93b1dc88,inset 0 30px 80px #4c78bf22}
 .lights{opacity:.22}
 .touch{color:var(--green)}
+
+/* ===================== v7: background that changes while you fall ===================== */
+/* stars drift a little, a terrain map (contour lines) of the ground below fades in and grows as you come down */
+.space{transform:translateY(calc(var(--sp,0) * -1px));inset:-10vh 0 -40vh 0;opacity:calc(1 - var(--dsc,0) * .55)}
+.terrain{position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:url(../img/terrain.svg) 0 0/1100px 1100px repeat;
+  opacity:calc(.07 + var(--dsc,0) * .3);background-position:0 calc(var(--py,0) * -2.2px);transform:scale(calc(.85 + var(--dsc,0) * .45));transform-origin:50% 50%;
+  -webkit-mask:radial-gradient(ellipse at 50% 60%,#000 20%,transparent 75%);mask:radial-gradient(ellipse at 50% 60%,#000 20%,transparent 75%)}
+.haze{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(120% 70% at 50% 120%,rgba(76,120,191,calc(var(--dsc,0) * .22)),transparent 60%),
+             radial-gradient(60% 50% at 85% 10%,rgba(224,145,90,.05),transparent 70%),
+             radial-gradient(70% 60% at 10% 30%,rgba(76,120,191,.07),transparent 70%)}
+@media (prefers-reduced-motion:reduce){.space,.terrain{transform:none}}

@@ -465,6 +465,11 @@ function frame(force){
   if(label!==lastPhase||force){hud.phase.textContent=label;lastPhase=label}
   hud.el.classList.toggle("shake",!landed&&cur&&cur.id==="missie");
   navLinks.forEach(a=>a.classList.toggle("on",!!cur&&a.getAttribute("href")==="#"+cur.id));
+  /* background: the closer to the ground, the more the terrain map below comes into view */
+  const dsc=launched?clamp(1-alt/1000):0;
+  rootEl.style.setProperty("--dsc",dsc.toFixed(3));
+  rootEl.style.setProperty("--py",(y*.06).toFixed(1));
+  rootEl.style.setProperty("--sp",((y*.06)%(H*.35)).toFixed(1));
   /* can opens */
   if(pinCan){
     const r=pinCan.getBoundingClientRect();
@@ -487,6 +492,7 @@ function frame(force){
     routeStops.forEach(s=>s.classList.toggle("shown",d>=parseFloat(s.style.getPropertyValue("--f"))-.04));
   }
 }
+const rootEl=document.documentElement;
 let ticking=false;
 addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;frame()})},{passive:true});
 setInterval(()=>{if(performance.now()-lastT>200){vel*=.6;if(vel<.05)vel=0;hud.vel.textContent=vel.toFixed(1)}},120);
