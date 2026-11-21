@@ -11,8 +11,8 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=6">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=7">
 </head>
 <body>
 
@@ -150,6 +150,7 @@
             <text x="40" y="22" class="small" data-en="power · sensors">stroom · sensoren</text><text x="40" y="40" class="small" data-en="computer · radio">computer · radio</text>
           </g>
           <text x="20" y="388" class="stamp">ASTIX · CANSAT · REV A</text>
+          <text x="40" y="352" class="hand-note" data-en="version A, not final yet">versie A, nog niet definitief</text>
         </svg>
 
         <div class="bp-side">
@@ -189,19 +190,32 @@
             <h3 data-en="Measure the air and send it down">De lucht meten en doorsturen</h3>
             <p data-en="During the fall the CanSat measures air pressure and temperature. From the pressure we work out how high it is. Everything goes live to our ground station, and at the end it has to land in one piece.">Tijdens de val meet de CanSat de luchtdruk en de temperatuur. Uit de luchtdruk rekenen we uit hoe hoog hij hangt. Alles gaat live naar ons grondstation, en op het einde moet hij heel landen.</p>
           </div>
-          <figure class="brief-vis chart-box">
-            <svg id="chart" viewBox="0 0 520 280" aria-label="Illustratie: hoogte daalt, luchtdruk en temperatuur stijgen tijdens de val">
-              <g class="c-grid"><path d="M50 30h450M50 90h450M50 150h450M50 210h450"/></g>
-              <path class="c-axis" d="M50 20v220h455"/>
-              <path class="c-line alt" pathLength="1" d="M50 40C150 70 230 110 300 150S440 225 500 236"/>
-              <path class="c-line pres" pathLength="1" d="M50 220C160 196 250 160 320 120S450 60 500 50"/>
-              <path class="c-line temp" pathLength="1" d="M50 186c30 -4 50 6 80 -2s50 -10 80 -14 40 4 70 -8 60 -10 90 -16 60 -12 130 -26"/>
-              <text x="505" y="262" text-anchor="end" class="c-lab" data-en="time after deployment →">tijd na het uitwerpen →</text>
+          <figure class="brief-vis chart-box notebook">
+            <span class="tape" aria-hidden="true"></span>
+            <svg id="chart" viewBox="0 0 520 300" aria-label="Onze hypothese: de hoogte daalt, de luchtdruk en de temperatuur stijgen tijdens de val">
+              <defs>
+                <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
+                  <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="n"/>
+                  <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+                </filter>
+              </defs>
+              <g filter="url(#pencil)">
+                <path class="c-axis" d="M52 24c-1 70 1 150 0 216 120 1 300-2 452 1"/>
+                <path class="c-axis" d="M46 34l6-12 6 12M494 236l12 5-12 6"/>
+                <path class="c-line alt" pathLength="1" d="M56 48C150 74 228 112 298 152S436 222 494 230"/>
+                <path class="c-line pres" pathLength="1" d="M56 222C160 200 248 164 318 124S446 66 494 58"/>
+                <path class="c-line temp" pathLength="1" d="M56 190c30-3 52 5 80-2s52-10 80-13 42 3 70-7 60-10 90-15 62-12 118-24"/>
+              </g>
+              <text x="430" y="218" class="hand blue" data-en="altitude ↓">hoogte ↓</text>
+              <text x="410" y="50" class="hand green" data-en="air pressure ↑">luchtdruk ↑</text>
+              <text x="372" y="134" class="hand orange" data-en="temp. ↑ ?">temp. ↑ ?</text>
+              <text x="500" y="268" text-anchor="end" class="hand grey" data-en="time after it leaves the rocket">tijd na het uitwerpen</text>
+              <g class="stamp-hyp" transform="rotate(-8 150 70)">
+                <rect x="84" y="48" width="138" height="36" rx="4"/>
+                <text x="153" y="73" text-anchor="middle" data-en="HYPOTHESIS">HYPOTHESE</text>
+              </g>
             </svg>
-            <figcaption class="legend mono">
-              <span class="k alt" data-en="altitude">hoogte</span><span class="k pres" data-en="air pressure">luchtdruk</span><span class="k temp" data-en="temperature">temperatuur</span>
-              <em data-en="Illustration: how the readings change during the fall.">Illustratie: zo veranderen de metingen tijdens de val.</em>
-            </figcaption>
+            <figcaption class="hand-cap" data-en="We don't know this yet. It is our hypothesis, and in Elsenborn we will measure it for real.">Dit weten we nog niet. Het is onze hypothese, en in Elsenborn gaan we het echt meten.</figcaption>
           </figure>
         </article>
 
@@ -213,6 +227,7 @@
             <p data-en="A parachute never comes straight down. The CanSat swings, spins and gets pushed sideways by the wind. We measure all of that movement, and afterwards we turn it into a map: at which height was the air calm, and where was it rough?">Een parachute komt nooit recht naar beneden. De CanSat slingert, draait en wordt opzij geduwd door de wind. Al die bewegingen meten we, en achteraf maken we er een kaart van: op welke hoogte was de lucht rustig, en waar was ze onrustig?</p>
           </div>
           <figure class="brief-vis turb">
+            <span class="turb-note" aria-hidden="true" data-en="this is how we picture the air">zo stellen we ons de lucht voor</span>
             <canvas id="turb" aria-label="Animatie van luchtstroming: rustig links, turbulent rechts"></canvas>
             <figcaption class="mono">
               <span class="calm" data-en="← calm">← rustig</span>
@@ -283,6 +298,7 @@
         <p class="sub" data-en="Put our first letters next to each other and you get ASTIX. Click a patch to see that person's tasks.">Zet onze voorletters naast elkaar en je krijgt ASTIX. Klik op een patch om de taken van die persoon te zien.</p>
       </header>
       <div class="crew" id="crew"></div>
+      <p class="scribble" aria-hidden="true" data-en="↑ together: A · S · T · I · X">↑ samen: A · S · T · I · X</p>
       <div class="task-head">
         <h3 id="task-title" data-en="All tasks">Alle taken</h3>
         <button type="button" class="btn ghost sm" id="task-reset" hidden data-en="Show everyone">Toon iedereen</button>
@@ -368,6 +384,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=6"></script>
+<script src="assets/js/main.js?v=7"></script>
 </body>
 </html>

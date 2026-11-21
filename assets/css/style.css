@@ -486,3 +486,27 @@ h3{font-size:19px;margin:0 0 10px}
 .legend em{flex-basis:100%;font-style:normal;color:var(--muted);font-size:11px}
 .brief-vis.turb{margin:0}
 .missions{display:none}
+
+/* ===================== v5: logbook touches ===================== */
+:root{--f-hand:"Caveat",cursive}
+.notebook{position:relative;background:#f4f0e4;border:0;border-radius:6px;transform:rotate(-.8deg);box-shadow:0 18px 50px #0009;overflow:visible;
+  background-image:linear-gradient(#9fb8de55 1px,transparent 1px),linear-gradient(90deg,#9fb8de55 1px,transparent 1px);background-size:20px 20px}
+.notebook::after{content:"";position:absolute;left:34px;top:0;bottom:0;width:1px;background:#e0707088}
+.notebook .tape{position:absolute;top:-14px;left:50%;width:110px;height:28px;margin-left:-55px;background:#f3e7b8cc;transform:rotate(2deg);box-shadow:0 2px 6px #0003;z-index:2}
+.notebook svg{display:block;width:100%;height:auto;padding:18px 12px 0 18px}
+.notebook .c-axis{fill:none;stroke:#3b4458;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.notebook .c-line{stroke-width:2.6}
+.notebook .c-line.alt{stroke:#2456b8}.notebook .c-line.pres{stroke:#2a8a4e}.notebook .c-line.temp{stroke:#d26a14}
+.hand{font:700 22px var(--f-hand)}
+.hand.blue{fill:#2456b8}.hand.green{fill:#2a8a4e}.hand.orange{fill:#d26a14}.hand.grey{fill:#5a6275;font-size:19px}
+.stamp-hyp rect{fill:none;stroke:#c8322a;stroke-width:3}
+.stamp-hyp text{font:700 18px var(--f-mono);letter-spacing:.18em;fill:#c8322a}
+.stamp-hyp{opacity:0;transform-box:fill-box;transform-origin:center}
+.chart-box.in .stamp-hyp{animation:stampin .45s cubic-bezier(.2,1.6,.4,1) 2.3s forwards}
+@keyframes stampin{from{opacity:0;transform:rotate(-8deg) scale(1.8)}to{opacity:.92;transform:rotate(-8deg) scale(1)}}
+.hand-cap{font:700 23px/1.25 var(--f-hand);color:#3b4458;padding:6px 22px 18px 48px}
+.hand-note{font:700 20px var(--f-hand);fill:var(--amber)}
+.scribble{font:700 26px var(--f-hand);color:var(--amber);text-align:center;margin:6px 0 0;transform:rotate(-1.5deg)}
+.brief-vis.turb{position:relative}
+.turb-note{position:absolute;top:10px;right:14px;z-index:2;font:700 21px var(--f-hand);color:#ffd88a;transform:rotate(-2deg);pointer-events:none}
+@media (max-width:600px){.hand{font-size:19px}.turb-note{font-size:18px}}
