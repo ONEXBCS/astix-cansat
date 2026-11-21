@@ -464,7 +464,7 @@ function frame(force){
   const label=landed?L("GELAND","TOUCHDOWN"):(!launched&&pL>.86)?L("UITGEWORPEN","DEPLOYED"):cur?(lang==="en"?cur.dataset.phaseEn:cur.dataset.phase):"T-0";
   if(label!==lastPhase||force){hud.phase.textContent=label;lastPhase=label}
   hud.el.classList.toggle("shake",!landed&&cur&&cur.id==="missie");
-  navLinks.forEach(a=>a.classList.toggle("on",!!cur&&a.getAttribute("href")==="#"+cur.id));
+  const curId=cur&&(cur.id==="verbinding"?"ontwerp":cur.id);navLinks.forEach(a=>a.classList.toggle("on",!!curId&&a.getAttribute("href")==="#"+curId));
   /* background: the closer to the ground, the more the terrain map below comes into view */
   const dsc=launched?clamp(1-alt/1000):0;
   rootEl.style.setProperty("--dsc",dsc.toFixed(3));
