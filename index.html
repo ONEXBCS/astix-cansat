@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=14">
+<link rel="stylesheet" href="assets/css/style.css?v=15">
 </head>
 <body>
 
@@ -26,6 +26,7 @@
     <span>ASTIX</span>
   </a>
   <nav class="nav" id="nav">
+    <span class="nav-pill" aria-hidden="true"></span>
     <a href="#start">Home</a>
     <a href="#lancering" data-en="Launch">Lancering</a>
     <a href="#cansat" data-en="CanSat">CanSat</a>
@@ -41,7 +42,25 @@
     <button type="button" data-lang="nl" aria-pressed="true">NL</button>
     <button type="button" data-lang="en" aria-pressed="false">EN</button>
   </div>
+  <button type="button" class="burger" aria-expanded="false" aria-controls="mnav" aria-label="Menu"><span></span><span></span><span></span></button>
+  <span class="bar-progress" aria-hidden="true"><i></i></span>
+  <div class="mnav" id="mnav">
+    <ol>
+      <li style="--i:0"><a href="#start"><span class="mn-num">01</span><span class="mn-t" data-en="Home">Home</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+      <li style="--i:1"><a href="#lancering"><span class="mn-num">02</span><span class="mn-t" data-en="Launch">Lancering</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+      <li style="--i:2"><a href="#cansat"><span class="mn-num">03</span><span class="mn-t" data-en="CanSat">CanSat</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+      <li style="--i:3"><a href="#missie"><span class="mn-num">04</span><span class="mn-t" data-en="Mission">Missie</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+      <li style="--i:4"><a href="#ontwerp"><span class="mn-num">05</span><span class="mn-t" data-en="Inside">Binnenin</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+      <li style="--i:5"><a href="#team"><span class="mn-num">06</span><span class="mn-t" data-en="Team">Team</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+      <li style="--i:6"><a href="#route"><span class="mn-num">07</span><span class="mn-t" data-en="Planning">Planning</span><span class="mn-alt" aria-hidden="true"></span></a></li>
+    </ol>
+    <div class="mnav-foot mono">
+      <a href="https://www.instagram.com/astixcansat/" target="_blank" rel="noopener">Instagram · @astixcansat ↗</a>
+      <span data-en="CanSat Belgium · 2026–27">CanSat België · 2026–27</span>
+    </div>
+  </div>
 </header>
+<div class="warp" aria-hidden="true"><span class="warp-lines"></span><span class="warp-label mono"></span></div>
 
 <!-- altimeter: up during the launch, down during the rest of the page -->
 <aside class="hud" aria-hidden="true">
@@ -391,6 +410,7 @@
 </footer>
 
 <script src="assets/js/main.js?v=10"></script>
+<script src="assets/js/nav.js?v=1"></script>
 <script type="module" src="assets/js/hero3d.js?v=4"></script>
 </body>
 </html>
