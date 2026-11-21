@@ -226,6 +226,7 @@ const once=(els,cls,th=.2)=>{
 };
 once(rvTargets,"in",.15);
 once([$("#bars")],"in",.4);
+once([$("#blueprint"),$(".chart-box")],"in",.35);
 const crewEl=$("#crew");
 once([crewEl],"in",.3);
 if(crewEl)new MutationObserver(()=>{}).observe(crewEl,{attributes:true});

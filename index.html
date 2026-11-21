@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 </head>
 <body>
 
@@ -122,13 +122,52 @@
 
       <div class="bigline" id="bigline" data-en="It gets launched by a real rocket, falls back to earth on its own parachute, and sends us data every second on the way down.">Hij wordt gelanceerd met een echte raket, valt aan zijn eigen parachute terug naar de aarde, en stuurt ons onderweg elke seconde data.</div>
 
-      <div class="specs mono">
-        <div><b>33</b><span>cl</span><em data-en="volume of the can">volume van het blikje</em></div>
-        <div><b>300–360</b><span>g</span><em data-en="mass, without parachute">gewicht, zonder parachute</em></div>
-        <div><b>500</b><span>€</span><em data-en="maximum cost of the CanSat">maximale kostprijs CanSat</em></div>
-        <div><b>11</b><span>G</span><em data-en="max. acceleration at launch">max. versnelling bij lancering</em></div>
-        <div><b>550</b><span>km/u</span><em data-en="top speed of the rocket">topsnelheid raket</em></div>
-        <div><b>4–6</b><span data-en="students">leerlingen</span><em data-en="per team, aged 16+">per team, vanaf 16 jaar</em></div>
+      <div class="blueprint" id="blueprint">
+        <svg class="bp-draw" viewBox="0 0 560 400" role="img" aria-label="Technische tekening van de CanSat met de belangrijkste regels">
+          <!-- the can -->
+          <g class="bp-can">
+            <path d="M200 92v170a50 12 0 0 0 100 0V92"/>
+            <ellipse cx="250" cy="92" rx="50" ry="12"/>
+            <path class="bp-dash" d="M200 126a50 12 0 0 0 100 0M200 160a50 12 0 0 0 100 0M200 194a50 12 0 0 0 100 0M200 228a50 12 0 0 0 100 0"/>
+            <path d="M250 92V58"/><circle cx="250" cy="55" r="3"/>
+          </g>
+          <!-- dimensions -->
+          <g class="bp-dim">
+            <path d="M168 92v170M162 92h12M162 262h12"/>
+            <text x="156" y="181" transform="rotate(-90 156 181)" text-anchor="middle">± 115 mm</text>
+            <path d="M200 300h100M200 294v12M300 294v12"/>
+            <text x="250" y="322" text-anchor="middle">± 66 mm</text>
+          </g>
+          <!-- callouts -->
+          <g class="bp-call">
+            <path class="ld" d="M300 104l40-34h40"/>
+            <text x="388" y="66" class="big">33 cl</text><text x="388" y="84" class="small" data-en="volume of the can">volume van het blikje</text>
+            <path class="ld" d="M300 178h80"/>
+            <text x="388" y="174" class="big">300–360 g</text><text x="388" y="192" class="small" data-en="without parachute">zonder parachute</text>
+            <path class="ld" d="M296 254l44 40h40"/>
+            <text x="388" y="290" class="big">max. 500</text><text x="388" y="308" class="small" data-en="euro, for everything together">euro, voor alles samen</text>
+            <path class="ld" d="M246 58l-36-30H120"/>
+            <text x="40" y="22" class="small" data-en="power · sensors">stroom · sensoren</text><text x="40" y="40" class="small" data-en="computer · radio">computer · radio</text>
+          </g>
+          <text x="20" y="388" class="stamp">ASTIX · CANSAT · REV A</text>
+        </svg>
+
+        <div class="bp-side">
+          <div class="gauges">
+            <figure class="gauge" style="--max:550;--val:550">
+              <svg viewBox="0 0 120 74" aria-hidden="true"><path class="g-track" d="M12 66a48 48 0 0 1 96 0"/><path class="g-fill" pathLength="100" d="M12 66a48 48 0 0 1 96 0"/><line class="g-needle" x1="60" y1="66" x2="60" y2="24"/><circle cx="60" cy="66" r="4"/></svg>
+              <b>550 <small>km/u</small></b><figcaption data-en="top speed of the rocket">topsnelheid raket</figcaption>
+            </figure>
+            <figure class="gauge" style="--max:11;--val:11">
+              <svg viewBox="0 0 120 74" aria-hidden="true"><path class="g-track" d="M12 66a48 48 0 0 1 96 0"/><path class="g-fill" pathLength="100" d="M12 66a48 48 0 0 1 96 0"/><line class="g-needle" x1="60" y1="66" x2="60" y2="24"/><circle cx="60" cy="66" r="4"/></svg>
+              <b>11 <small>G</small></b><figcaption data-en="at lift-off">bij de start</figcaption>
+            </figure>
+          </div>
+          <div class="seats">
+            <div class="seat-row" aria-hidden="true"><span style="--c:#ff8a3d">A</span><span style="--c:#ffd84a">S</span><span style="--c:#c77dff">T</span><span style="--c:#4fe3a1">I</span><span style="--c:#4aa0ff">X</span><span class="empty">+</span></div>
+            <p data-en="A team has 4 to 6 students of at least 16. We are five.">Een team telt 4 tot 6 leerlingen van minstens 16 jaar. Wij zijn met vijf.</p>
+          </div>
+        </div>
       </div>
       <p class="src mono"><span data-en="Source:">Bron:</span> <a href="https://esero.be/nl/stem-projecten-cansat/" target="_blank" rel="noopener">ESERO Belgium · CanSat</a></p>
     </div>
@@ -142,29 +181,47 @@
         <h2 data-en="What our CanSat has to do">Wat onze CanSat moet doen</h2>
       </header>
 
-      <div class="missions">
-        <article class="mission">
-          <p class="mono tag" data-en="PRIMARY MISSION">PRIMAIRE MISSIE</p>
-          <h3 data-en="Same for every team">Voor elk team hetzelfde</h3>
-          <p data-en="Measure air pressure and temperature, work out the altitude, and send it all to our ground station during the flight. Then land safely.">Luchtdruk en temperatuur meten, daaruit de hoogte berekenen, en dat allemaal tijdens de vlucht naar ons grondstation sturen. En daarna veilig landen.</p>
-          <ul class="chips mono"><li data-en="air pressure">luchtdruk</li><li data-en="temperature">temperatuur</li><li data-en="altitude">hoogte</li><li data-en="live to the ground">live naar de grond</li></ul>
+      <div class="brief">
+        <article class="brief-row">
+          <div class="brief-txt">
+            <span class="num">01</span>
+            <p class="mono label" data-en="PRIMARY MISSION · SAME FOR EVERY TEAM">PRIMAIRE MISSIE · VOOR ELK TEAM HETZELFDE</p>
+            <h3 data-en="Measure the air and send it down">De lucht meten en doorsturen</h3>
+            <p data-en="During the fall the CanSat measures air pressure and temperature. From the pressure we work out how high it is. Everything goes live to our ground station, and at the end it has to land in one piece.">Tijdens de val meet de CanSat de luchtdruk en de temperatuur. Uit de luchtdruk rekenen we uit hoe hoog hij hangt. Alles gaat live naar ons grondstation, en op het einde moet hij heel landen.</p>
+          </div>
+          <figure class="brief-vis chart-box">
+            <svg id="chart" viewBox="0 0 520 280" aria-label="Illustratie: hoogte daalt, luchtdruk en temperatuur stijgen tijdens de val">
+              <g class="c-grid"><path d="M50 30h450M50 90h450M50 150h450M50 210h450"/></g>
+              <path class="c-axis" d="M50 20v220h455"/>
+              <path class="c-line alt" pathLength="1" d="M50 40C150 70 230 110 300 150S440 225 500 236"/>
+              <path class="c-line pres" pathLength="1" d="M50 220C160 196 250 160 320 120S450 60 500 50"/>
+              <path class="c-line temp" pathLength="1" d="M50 186c30 -4 50 6 80 -2s50 -10 80 -14 40 4 70 -8 60 -10 90 -16 60 -12 130 -26"/>
+              <text x="505" y="262" text-anchor="end" class="c-lab" data-en="time after deployment →">tijd na het uitwerpen →</text>
+            </svg>
+            <figcaption class="legend mono">
+              <span class="k alt" data-en="altitude">hoogte</span><span class="k pres" data-en="air pressure">luchtdruk</span><span class="k temp" data-en="temperature">temperatuur</span>
+              <em data-en="Illustration: how the readings change during the fall.">Illustratie: zo veranderen de metingen tijdens de val.</em>
+            </figcaption>
+          </figure>
         </article>
-        <article class="mission second">
-          <p class="mono tag" data-en="SECONDARY MISSION">SECUNDAIRE MISSIE</p>
-          <h3 data-en="Our own idea: turbulence">Ons eigen idee: turbulentie</h3>
-          <p data-en="A parachute never falls in a straight line. The CanSat swings, turns and gets pushed around by the wind. We measure that movement and turn it into a map: at which height was the air calm, and where was it restless?">Een parachute valt nooit recht naar beneden. De CanSat slingert, draait en wordt opzij geduwd door de wind. Die bewegingen meten we, en daar maken we een kaart van: op welke hoogte was de lucht rustig, en waar was ze onrustig?</p>
-          <ul class="chips mono"><li data-en="movement">beweging</li><li data-en="swinging">slingeren</li><li data-en="turbulence map">turbulentiekaart</li></ul>
+
+        <article class="brief-row flip">
+          <div class="brief-txt">
+            <span class="num">02</span>
+            <p class="mono label sec2" data-en="SECONDARY MISSION · OUR OWN IDEA">SECUNDAIRE MISSIE · ONS EIGEN IDEE</p>
+            <h3 data-en="Mapping turbulence">Turbulentie in kaart brengen</h3>
+            <p data-en="A parachute never comes straight down. The CanSat swings, spins and gets pushed sideways by the wind. We measure all of that movement, and afterwards we turn it into a map: at which height was the air calm, and where was it rough?">Een parachute komt nooit recht naar beneden. De CanSat slingert, draait en wordt opzij geduwd door de wind. Al die bewegingen meten we, en achteraf maken we er een kaart van: op welke hoogte was de lucht rustig, en waar was ze onrustig?</p>
+          </div>
+          <figure class="brief-vis turb">
+            <canvas id="turb" aria-label="Animatie van luchtstroming: rustig links, turbulent rechts"></canvas>
+            <figcaption class="mono">
+              <span class="calm" data-en="← calm">← rustig</span>
+              <span data-en="move your mouse or finger through it">beweeg je muis of vinger erdoor</span>
+              <span class="rough" data-en="turbulent →">turbulent →</span>
+            </figcaption>
+          </figure>
         </article>
       </div>
-
-      <figure class="turb">
-        <canvas id="turb" aria-label="Animatie van luchtstroming: rustig links, turbulent rechts"></canvas>
-        <figcaption class="mono">
-          <span class="calm" data-en="← calm air">← rustige lucht</span>
-          <span data-en="move your mouse or finger through it">beweeg je muis of vinger erdoor</span>
-          <span class="rough" data-en="turbulent →">turbulent →</span>
-        </figcaption>
-      </figure>
     </div>
   </section>
 
@@ -311,6 +368,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=5"></script>
+<script src="assets/js/main.js?v=6"></script>
 </body>
 </html>

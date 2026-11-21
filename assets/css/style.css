@@ -411,3 +411,78 @@ h3{font-size:19px;margin:0 0 10px}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:#c9d6ef;background:#050a1c99;border-radius:14px;padding:10px 16px}
 .foot-bottom a{color:#fff}
 .foot-bottom .btn{color:var(--ice)}
+
+/* ===================== v4: blueprint + briefing ===================== */
+.blueprint{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:0;border:1px solid #5aa0ff55;border-radius:18px;overflow:hidden;
+  background:#071636;background-image:linear-gradient(#5aa0ff14 1px,transparent 1px),linear-gradient(90deg,#5aa0ff14 1px,transparent 1px),linear-gradient(#5aa0ff08 1px,transparent 1px),linear-gradient(90deg,#5aa0ff08 1px,transparent 1px);
+  background-size:60px 60px,60px 60px,12px 12px,12px 12px}
+@media (max-width:860px){.blueprint{grid-template-columns:1fr}}
+.bp-draw{width:100%;height:auto;display:block;padding:18px 10px 6px}
+.bp-draw *{vector-effect:non-scaling-stroke}
+.bp-can path,.bp-can ellipse,.bp-can circle{fill:none;stroke:#cfe6ff;stroke-width:1.6}
+.bp-can .bp-dash{stroke-dasharray:4 4;stroke:#7fb4f5;stroke-width:1}
+.bp-dim path{stroke:#7fb4f5;stroke-width:1;fill:none}
+.bp-dim text{font:12px var(--f-mono);fill:#7fb4f5}
+.bp-call .ld{fill:none;stroke:var(--amber);stroke-width:1.2}
+.bp-call .big{font:400 21px var(--f-display);fill:#fff}
+.bp-call .small{font:12px var(--f-mono);fill:#9fc0e8;letter-spacing:.04em}
+.stamp{font:10px var(--f-mono);fill:#5aa0ff88;letter-spacing:.2em}
+/* drawing animation: lines draw, labels fade in */
+.bp-can>*,.bp-dim path,.bp-call .ld{stroke-dasharray:600;stroke-dashoffset:600;transition:stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1)}
+.bp-can .bp-dash{stroke-dasharray:4 4;stroke-dashoffset:0;opacity:0;transition:opacity .8s .9s}
+.bp-call text,.bp-dim text{opacity:0;transition:opacity .6s}
+.blueprint.in .bp-can>*,.blueprint.in .bp-dim path{stroke-dashoffset:0}
+.blueprint.in .bp-call .ld{stroke-dashoffset:0;transition-delay:.7s}
+.blueprint.in .bp-can .bp-dash{opacity:1}
+.blueprint.in .bp-call text,.blueprint.in .bp-dim text{opacity:1;transition-delay:1.2s}
+.bp-side{border-left:1px solid #5aa0ff33;padding:24px;display:grid;gap:22px;align-content:center;background:#05112ccc}
+@media (max-width:860px){.bp-side{border-left:0;border-top:1px solid #5aa0ff33}}
+.gauges{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gauge{margin:0;text-align:center}
+.gauge svg{width:100%;max-width:170px;overflow:visible}
+.g-track{fill:none;stroke:#ffffff14;stroke-width:8;stroke-linecap:round}
+.g-fill{fill:none;stroke:url(#none);stroke:var(--amber);stroke-width:8;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.8s cubic-bezier(.2,.8,.2,1) .3s}
+.gauge:nth-child(2) .g-fill{stroke:var(--red)}
+.g-needle{stroke:#fff;stroke-width:2.4;stroke-linecap:round;transform-origin:60px 66px;transform:rotate(-90deg);transition:transform 1.8s cubic-bezier(.3,1.25,.4,1) .3s}
+.gauge circle{fill:#fff}
+.blueprint.in .g-fill{stroke-dashoffset:calc(100 - 100 * var(--val) / var(--max))}
+.blueprint.in .g-needle{transform:rotate(90deg)}
+.gauge b{display:block;font:400 22px var(--f-display);margin-top:4px}
+.gauge b small{font:12px var(--f-mono);color:var(--blue-2)}
+.gauge figcaption{font:11px var(--f-mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.seat-row{display:flex;gap:8px;margin-bottom:10px}
+.seat-row span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:400 14px var(--f-display);color:#06102a;background:var(--c);
+  transform:scale(0);transition:transform .45s cubic-bezier(.2,1.6,.4,1)}
+.seat-row .empty{background:none;border:1.5px dashed #8fa3c8;color:#8fa3c8}
+.blueprint.in .seat-row span{transform:scale(1)}
+.seat-row span:nth-child(2){transition-delay:.1s}.seat-row span:nth-child(3){transition-delay:.2s}.seat-row span:nth-child(4){transition-delay:.3s}.seat-row span:nth-child(5){transition-delay:.4s}.seat-row span:nth-child(6){transition-delay:.6s}
+.seats p{margin:0;color:var(--ice);font-size:15px}
+
+/* missions briefing */
+.brief{display:grid;gap:64px}
+.brief-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,4vw,56px);align-items:center}
+.brief-row.flip .brief-txt{order:2}
+@media (max-width:860px){.brief-row{grid-template-columns:1fr}.brief-row.flip .brief-txt{order:0}}
+.brief-txt{position:relative}
+.num{display:block;font:400 clamp(54px,6vw,80px)/1 var(--f-display);color:transparent;-webkit-text-stroke:1px #5aa0ff77;margin:0 0 10px;letter-spacing:.04em}
+.flip .num{-webkit-text-stroke-color:#ffb54777}
+.brief-txt h3{font-size:clamp(22px,2.4vw,30px);margin-bottom:14px}
+.brief-txt>p:not(.label){color:var(--muted);font-size:17px;margin:0}
+.label.sec2{color:var(--amber)}
+.brief-vis{margin:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#040916}
+.chart-box svg{display:block;width:100%;height:auto;padding:14px 10px 0}
+.c-grid path{stroke:#ffffff0d;stroke-width:1}
+.c-axis{fill:none;stroke:#5aa0ff66;stroke-width:1.2}
+.c-line{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1)}
+.c-line.alt{stroke:var(--blue-2)}.c-line.pres{stroke:var(--green);transition-delay:.25s}.c-line.temp{stroke:var(--amber);transition-delay:.5s}
+.chart-box.in .c-line{stroke-dashoffset:0}
+.c-dot{fill:#fff;opacity:0;offset-path:path("M50 40C150 70 230 110 300 150S440 225 500 236");offset-distance:0%;offset-rotate:0deg;cx:0;cy:0}
+.chart-box.in .c-dot{opacity:1;animation:ride 6s ease-in-out 2.4s infinite}
+@keyframes ride{0%{offset-distance:0%}85%,100%{offset-distance:100%}}
+.c-lab{font:11px var(--f-mono);fill:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:10px 16px 14px;font-size:12px;color:var(--ice);border-top:1px solid var(--line)}
+.legend .k::before{content:"";display:inline-block;width:14px;height:3px;border-radius:3px;margin-right:6px;vertical-align:middle;background:currentColor}
+.legend .alt{color:var(--blue-2)}.legend .pres{color:var(--green)}.legend .temp{color:var(--amber)}
+.legend em{flex-basis:100%;font-style:normal;color:var(--muted);font-size:11px}
+.brief-vis.turb{margin:0}
+.missions{display:none}
