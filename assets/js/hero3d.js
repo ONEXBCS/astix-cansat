@@ -16,7 +16,7 @@ if (!canvas || !webglOK()) {
 
 async function start() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(1.75, devicePixelRatio || 1));
+  renderer.setPixelRatio(Math.min(matchMedia("(pointer:coarse)").matches ? 1.5 : 1.75, devicePixelRatio || 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -165,6 +165,7 @@ async function start() {
   /* --- layout --- */
   let W = 0, H = 0, wide = true;
   function resize() {
+    if (canvas.clientWidth === W && canvas.clientHeight === H && W) return;
     W = canvas.clientWidth; H = canvas.clientHeight; wide = W > 820;
     renderer.setSize(W, H, false); camera.aspect = W / H;
     camera.fov = wide ? 34 : 42; camera.updateProjectionMatrix();

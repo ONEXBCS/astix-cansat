@@ -269,6 +269,7 @@ const fl=(function(){
   let W=0,H=0,dpr=1,trees=[],clouds=[];
   function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
   function size(){
+    if(cv.clientWidth===W&&cv.clientHeight===H&&W)return;
     dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
     trees=[];for(let x=-20,i=0;x<W+20;i++){const w=8+rnd(i)*14;trees.push({x,w,h:18+rnd(i+50)*34});x+=w*.55}
     clouds=[{a:230,x:.18,s:1.1},{a:330,x:.78,s:.8},{a:470,x:.33,s:1.4},{a:600,x:.86,s:1},{a:720,x:.1,s:.9},{a:860,x:.62,s:1.3},{a:980,x:.25,s:1}];
@@ -467,9 +468,11 @@ function frame(force){
   const curId=cur&&(cur.id==="verbinding"?"ontwerp":cur.id);navLinks.forEach(a=>a.classList.toggle("on",!!curId&&a.getAttribute("href")==="#"+curId));
   /* background: the closer to the ground, the more the terrain map below comes into view */
   const dsc=launched?clamp(1-alt/1000):0;
-  rootEl.style.setProperty("--dsc",dsc.toFixed(3));
-  rootEl.style.setProperty("--py",(y*.06).toFixed(1));
-  rootEl.style.setProperty("--sp",((y*.06)%(H*.35)).toFixed(1));
+  // set on the background layers only, so the rest of the page does not restyle on every scroll frame
+  const dS=dsc.toFixed(3),pyS=(y*.06).toFixed(1),spS=((y*.06)%(H*.35)).toFixed(1);
+  if(dS!==bgLast.d){bgLast.d=dS;bgEls.forEach(e=>e.style.setProperty("--dsc",dS))}
+  if(!coarse&&terrEl)terrEl.style.setProperty("--py",pyS);
+  if(spaceEl)spaceEl.style.setProperty("--sp",spS);
   /* can opens */
   if(pinCan){
     const r=pinCan.getBoundingClientRect();
@@ -493,6 +496,7 @@ function frame(force){
   }
 }
 const rootEl=document.documentElement;
+const bgEls=[...document.querySelectorAll(".space,.terrain,.haze")],terrEl=document.querySelector(".terrain"),spaceEl=document.querySelector(".space"),bgLast={d:""},coarse=matchMedia("(pointer:coarse)").matches;
 let ticking=false;
 addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{ticking=false;frame()})},{passive:true});
 setInterval(()=>{if(performance.now()-lastT>200){vel*=.6;if(vel<.05)vel=0;hud.vel.textContent=vel.toFixed(1)}},120);
@@ -502,7 +506,7 @@ setInterval(()=>{if(performance.now()-lastT>200){vel*=.6;if(vel<.05)vel=0;hud.ve
   const cv=$("#turb");if(!cv)return;
   const ctx=cv.getContext("2d");let W=0,H=0,parts=[],on=false,raf=0,t=0;
   const mouse={x:-999,y:-999};
-  function size(){const dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  function size(){if(cv.clientWidth===W&&cv.clientHeight===H&&W)return;const dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
     parts=Array.from({length:Math.round(W*H/1300)},()=>({x:Math.random()*W,y:Math.random()*H}));ctx.fillStyle="#040916";ctx.fillRect(0,0,W,H)}
   function field(x,y){
     const r=x/W,k=0.4+r*r*3.2;
